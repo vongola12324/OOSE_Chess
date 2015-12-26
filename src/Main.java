@@ -17,9 +17,9 @@ public class Main extends Application {
     public void start(Stage primaryStage) throws IOException {
         Parent root = FXMLLoader.load(getClass().getResource("MainView.fxml"));
         primaryStage.setTitle("OOSE_Chess");
-        primaryStage.setScene(new Scene(root, 1280, 720));
+        primaryStage.setScene(new Scene(root, 1138, 720));
         primaryStage.setResizable(false);
         primaryStage.show();
     }
-    
+
 }
