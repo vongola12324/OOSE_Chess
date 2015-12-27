@@ -10,14 +10,13 @@ import javafx.scene.layout.GridPane;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-/**
- * Created by vongola12324 on 2015/12/16.
- */
 public class MainViewController implements Initializable {
     private static int gameRound = 1;
     private ImageView[][] board = new ImageView[20][20];
     private Image black = new Image("image/black.jpg");
     private Image white = new Image("image/white.jpg");
+
+    private ChessBoard chessBoard = new ChessBoard();
 
     @FXML
     GridPane MainView_Board;

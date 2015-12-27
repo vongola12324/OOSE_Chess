@@ -54,10 +54,17 @@ class Location{
     public Integer getY(){
         return this.y;
     }
+
+
+    @Override
+    public String toString(){
+        return "(" + this.getX() + ", " + this.getY() + ")";
+    }
 }
 
 class ChessFactory{
     public Chess makeChess(Integer color){
         return new Chess(color);
     }
+
 }
