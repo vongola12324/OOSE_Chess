@@ -91,32 +91,37 @@
          </children>
       </Pane>
       <Pane layoutX="753.0" layoutY="245.0" prefHeight="240.0" prefWidth="377.0">
-         <children>
+        <children>
             <Label layoutX="126.0" layoutY="14.0" text="遊戲選項">
                <font>
                   <Font size="26.0" />
                </font>
             </Label>
-            <Button fx:id="Rule_five" layoutX="41.0" layoutY="192.0" mnemonicParsing="false" prefHeight="34.0" prefWidth="120.0" text="五子棋">
+            <RadioButton fx:id="Rule_five" layoutX="101.0" layoutY="192.0" mnemonicParsing="false" prefHeight="34.0" prefWidth="120.0" text="五子棋">
                <font>
                   <Font size="15.0" />
                </font>
-            </Button>
-            <Button fx:id="Rule_Weichi" layoutX="211.0" layoutY="192.0" mnemonicParsing="false" prefHeight="34.0" prefWidth="76.0" text="圍棋">
+            </RadioButton>
+            <RadioButton fx:id="Rule_Weichi" layoutX="211.0" layoutY="192.0" mnemonicParsing="false" prefHeight="34.0" prefWidth="76.0" text="圍棋">
                <font>
                   <Font size="15.0" />
                </font>
-            </Button>
+            </RadioButton>
             <Label layoutX="163.0" layoutY="168.0" text="模式">
                <font>
                   <Font size="18.0" />
                </font>
             </Label>
-            <Button fx:id="New_Game" layoutX="115.0" layoutY="66.0" mnemonicParsing="false" prefHeight="34.0" prefWidth="120.0" text="New Game">
+            <Button fx:id="New_Game" layoutX="115.0" layoutY="66.0" mnemonicParsing="false" prefHeight="34.0" prefWidth="120.0" text="新遊戲">
                <font>
                   <Font size="15.0" />
                </font>
             </Button>
+             <Button fx:id="WinLose" layoutX="115.0" layoutY="120.0" mnemonicParsing="false" prefHeight="34.0" prefWidth="120.0" text="認輸">
+                 <font>
+                     <Font size="15.0" />
+                 </font>
+             </Button>
          </children>
       </Pane>
    </children>
