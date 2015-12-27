@@ -21,7 +21,8 @@ public class Chess {
     }
 
     public Integer getColor(){
-        return this.color;
+        MainViewController getColor = new MainViewController();
+        return  getColor.isNowBlackOrWhite();//0 black,1 white  this is in MainViewController
     }
 
     public void setStep(){
