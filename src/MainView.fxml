@@ -70,6 +70,8 @@
                   <Font size="26.0" />
                </font>
             </Label>
+            <TextField layoutX="130.0" layoutY="65.0">
+            </TextField>
          </children>
       </Pane>
       <Pane layoutX="753.0" layoutY="491.0" prefHeight="240.0" prefWidth="377.0">
@@ -84,6 +86,8 @@
                   <Font size="26.0" />
                </font>
             </Label>
+            <TextField layoutX="130.0" layoutY="58.0">
+            </TextField>
          </children>
       </Pane>
       <Pane layoutX="753.0" layoutY="245.0" prefHeight="240.0" prefWidth="377.0">
