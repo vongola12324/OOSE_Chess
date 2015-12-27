@@ -70,7 +70,7 @@
                   <Font size="26.0" />
                </font>
             </Label>
-            <TextField layoutX="130.0" layoutY="65.0">
+            <TextField fx:id="Player1_name" layoutX="130.0" layoutY="65.0">
             </TextField>
          </children>
       </Pane>
@@ -86,33 +86,33 @@
                   <Font size="26.0" />
                </font>
             </Label>
-            <TextField layoutX="130.0" layoutY="58.0">
+            <TextField fx:id="Player2_name" layoutX="130.0" layoutY="58.0">
             </TextField>
          </children>
       </Pane>
       <Pane layoutX="753.0" layoutY="245.0" prefHeight="240.0" prefWidth="377.0">
          <children>
-            <Label layoutX="106.0" layoutY="14.0" text="Control Panel">
+            <Label layoutX="126.0" layoutY="14.0" text="遊戲選項">
                <font>
                   <Font size="26.0" />
                </font>
             </Label>
-            <Button layoutX="41.0" layoutY="192.0" mnemonicParsing="false" prefHeight="34.0" prefWidth="120.0" text="Five in a Row">
+            <Button fx:id="Rule_five" layoutX="41.0" layoutY="192.0" mnemonicParsing="false" prefHeight="34.0" prefWidth="120.0" text="五子棋">
                <font>
                   <Font size="15.0" />
                </font>
             </Button>
-            <Button layoutX="211.0" layoutY="192.0" mnemonicParsing="false" prefHeight="34.0" prefWidth="76.0" text="Weichi">
+            <Button fx:id="Rule_Weichi" layoutX="211.0" layoutY="192.0" mnemonicParsing="false" prefHeight="34.0" prefWidth="76.0" text="圍棋">
                <font>
                   <Font size="15.0" />
                </font>
             </Button>
-            <Label layoutX="163.0" layoutY="168.0" text="Mode">
+            <Label layoutX="163.0" layoutY="168.0" text="模式">
                <font>
                   <Font size="18.0" />
                </font>
             </Label>
-            <Button layoutX="128.0" layoutY="66.0" mnemonicParsing="false" prefHeight="34.0" prefWidth="120.0" text="New Game">
+            <Button fx:id="New_Game" layoutX="115.0" layoutY="66.0" mnemonicParsing="false" prefHeight="34.0" prefWidth="120.0" text="New Game">
                <font>
                   <Font size="15.0" />
                </font>
