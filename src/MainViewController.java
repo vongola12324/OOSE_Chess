@@ -6,11 +6,9 @@ import javafx.scene.layout.GridPane;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-/**
- * Created by vongola12324 on 2015/12/16.
- */
 public class MainViewController implements Initializable {
     private ImageView[][] board = new ImageView[20][20];
+    private ChessBoard chessBoard = new ChessBoard();
     @FXML
     GridPane MainView_Board;
 
