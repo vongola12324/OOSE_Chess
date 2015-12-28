@@ -14,12 +14,13 @@ import java.util.Observable;
 import java.util.Observer;
 import java.util.ResourceBundle;
 
-public class MainViewController implements Initializable, Observer {
-    private ChessBoard chessBoard = new ChessBoard(Const.GOMOKU_CHESS);
+public class MainViewController implements Initializable {
     private myImageView[][] board = new myImageView[20][20];
     private myImageView nowLocationImage;
     private Image black = new Image("image/black.jpg");
     private Image white = new Image("image/white.jpg");
+
+    private ChessBoard chessBoard = new ChessBoard(Const.GOMOKU_CHESS);
 
     @FXML
     GridPane MainView_Board;
@@ -52,12 +53,12 @@ public class MainViewController implements Initializable, Observer {
     void setAllActionListener() {
         setAllActionOfBoardToBlackOrWhite();
 
-        New_Game.setOnMouseClicked(new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent event) {
-                startAndInitial();
-            }
-        });
+//        New_Game.setOnMouseClicked(new EventHandler<MouseEvent>() {
+//            @Override
+//            public void handle(MouseEvent event) {
+//                startAndInitial();
+//            }
+//        });
     }
 
     void setAllActionOfBoardToBlackOrWhite() {
@@ -74,6 +75,7 @@ public class MainViewController implements Initializable, Observer {
             public void handle(MouseEvent event) {
                 nowLocationImage = (myImageView) event.getSource();
                 try {
+                    updateImageToColor(chessBoard.getNowPlayer());
                     chessBoard.clickDot(nowLocationImage.getLoc());
                     nowLocationImage.setOnMouseClicked(null);
                 } catch (HasChessException e) {
@@ -83,19 +85,11 @@ public class MainViewController implements Initializable, Observer {
         });
     }
 
-    void updateChessOnBoard(Chess chessBeUpdated) {
-        int updatedX = chessBeUpdated.getNowLocX();
-        int updatedY = chessBeUpdated.getNowLocY();
-
-        if (chessBeUpdated.getColor() == Const.BLACK_CHESS)
-            board[updatedX][updatedY].setImage(black);
-        else if (chessBeUpdated.getColor() == Const.WHITE_CHESS)
-            board[updatedX][updatedY].setImage(white);
-    }
-
-    @Override
-    public void update(Observable o, Object arg) {
-        this.updateChessOnBoard((Chess) arg);
+    void updateImageToColor(short color) {
+        if(color == Const.BLACK_CHESS)
+            nowLocationImage.setImage(black);
+        else
+            nowLocationImage.setImage(white);
     }
 }
 
