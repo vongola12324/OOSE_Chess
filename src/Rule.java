@@ -1,6 +1,5 @@
-// TODO:FinishCheck
 abstract class Rule {
-    public abstract boolean check(Chess[][] ChessStatus);
+    public abstract short check(Chess[][] ChessStatus);
 
     public abstract void eat(Chess[][] ChessStatus);
 }
@@ -8,8 +7,9 @@ abstract class Rule {
 class GoRule extends Rule {
 
     @Override
-    public boolean check(final Chess[][] ChessStatus) {
-        return false;
+    public short check(final Chess[][] ChessStatus) {
+        // TODO: GO/FinishCheck
+        return Const.NO_WIN;
     }
 
     @Override
@@ -19,9 +19,9 @@ class GoRule extends Rule {
 }
 
 class GomokuRule extends Rule {
-
+    // Fixme: Change to short and return who win
     @Override
-    public boolean check(final Chess[][] ChessStatus) {
+    public short check(final Chess[][] ChessStatus) {
         int Row_len = ChessStatus.length, Col_len = ChessStatus[0].length;
 
         for (int i = 0; i < Row_len; i++) {

@@ -40,10 +40,11 @@ public class ChessBoard extends Observable {
 
 
             // Check Finish
-            if (this.checkFinish()) {
-                // TODO:
-            } else {
+            short winner = this.checkFinish();
+            if (winner != Const.NO_WIN && winner != Const.TIE) {
                 this.changePlayer();
+            } else {
+                // TODO: Calc
             }
 
 
@@ -65,7 +66,7 @@ public class ChessBoard extends Observable {
         }
     }
 
-    private boolean checkFinish(){
+    private short checkFinish(){
         return this.rule.check(ChessStatus);
     }
 
