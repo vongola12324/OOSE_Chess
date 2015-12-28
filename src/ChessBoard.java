@@ -56,12 +56,9 @@ public class ChessBoard {
                 }
             }
 
-
             // Step ++
             this.step++;
-
         }
-
     }
 
     private short getStatus(Location loc){

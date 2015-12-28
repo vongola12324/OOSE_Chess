@@ -20,7 +20,7 @@ public class MainViewController implements Initializable {
     private Image black = new Image("image/black.jpg");
     private Image white = new Image("image/white.jpg");
 
-    private ChessBoard chessBoard = new ChessBoard(Const.GOMOKU_CHESS);
+    private ChessBoard chessBoard;
 
     @FXML
     GridPane MainView_Board;
@@ -39,6 +39,7 @@ public class MainViewController implements Initializable {
     }
 
     void initializeBoard() {
+        chessBoard = new ChessBoard(Const.GOMOKU_CHESS);
         for (int i = 0; i < 20; i++) {
             for (int i2 = 0; i2 < 20; i2++) {
                 board[i][i2] = new myImageView("image/board.jpg");
@@ -53,12 +54,12 @@ public class MainViewController implements Initializable {
     void setAllActionListener() {
         setAllActionOfBoardToBlackOrWhite();
 
-//        New_Game.setOnMouseClicked(new EventHandler<MouseEvent>() {
-//            @Override
-//            public void handle(MouseEvent event) {
-//                startAndInitial();
-//            }
-//        });
+        New_Game.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                startAndInitial();
+            }
+        });
     }
 
     void setAllActionOfBoardToBlackOrWhite() {

@@ -112,12 +112,12 @@
                   <Font size="18.0" />
                </font>
             </Label>
-            <Button fx:id="New_Game" layoutX="115.0" layoutY="66.0" mnemonicParsing="false" prefHeight="34.0" prefWidth="120.0" text="新遊戲">
+            <Button fx:id="New_Game" layoutX="115.0" layoutY="66.0" mnemonicParsing="false" prefHeight="34.0" prefWidth="120.0" text="New Game">
                <font>
                   <Font size="15.0" />
                </font>
             </Button>
-             <Button fx:id="ToLose" layoutX="115.0" layoutY="120.0" mnemonicParsing="false" prefHeight="34.0" prefWidth="120.0" text="認輸">
+             <Button fx:id="ToLose" layoutX="115.0" layoutY="120.0" mnemonicParsing="false" prefHeight="34.0" prefWidth="120.0" text="Surrender">
                  <font>
                      <Font size="15.0" />
                  </font>
