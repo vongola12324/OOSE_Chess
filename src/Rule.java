@@ -26,16 +26,18 @@ class GomokuRule extends Rule {
     @Override
     public short check(final Chess[][] ChessStatus) {
         int Row_len = ChessStatus.length, Col_len = ChessStatus[0].length;
-
+        int if_fullChess = 0;
         for (int i = 0; i < Row_len; i++) {
             for (int j = i; j < Col_len; j++) {
                 if (ChessStatus[i][j] != null) {
-                    int CheckPoint = i, CheckLocX = 1, CheckLocY = 1;
+                    int CheckPoint = i + 1, CheckLocX = 1, CheckLocY = 1;
                     boolean CheckResault = false;
                     short nowColor = ChessStatus[i][j].getColor();
 
-                    while (CheckPoint + 1 < Col_len && CheckPoint < j + 4) {
-                        if (ChessStatus[i][CheckPoint].getColor() != nowColor) {
+                    //Scan Left 4 chess
+                    while (CheckPoint < Col_len && CheckPoint < j + 4) {
+                        if (ChessStatus[i][CheckPoint] != null &&
+                                ChessStatus[i][CheckPoint].getColor() != nowColor) {
                             CheckResault = false;
                             break;
                         } else {
@@ -44,11 +46,16 @@ class GomokuRule extends Rule {
                         CheckPoint++;
                     }
                     if (CheckResault == true) {
-                        return true;
+                        if (nowColor == Const.WHITE_CHESS)
+                            return Const.WHITE_WIN;
+                        else
+                            return Const.BLACK_WIN;
                     }
-                    CheckPoint = i;
+                    //Scan Down 4 chess
+                    CheckPoint = i + 1;
                     while (CheckPoint + 1 < Row_len && CheckPoint < i + 4) {
-                        if (ChessStatus[CheckPoint][j].getColor() != nowColor) {
+                        if (ChessStatus[CheckPoint][j] != null &&
+                                ChessStatus[CheckPoint][j].getColor() != nowColor) {
                             CheckResault = false;
                             break;
                         } else {
@@ -57,12 +64,18 @@ class GomokuRule extends Rule {
                         CheckPoint++;
                     }
                     if (CheckResault == true) {
-                        return true;
+                        if (nowColor == Const.WHITE_CHESS)
+                            return Const.WHITE_WIN;
+                        else
+                            return Const.BLACK_WIN;
                     }
+
+                    //Scan LeftUp 4 chess
                     CheckLocX = 1;
                     CheckLocY = 1;
                     while (CheckLocX + i < Row_len && CheckLocY + j < CheckLocY) {
-                        if (ChessStatus[CheckLocX + i][CheckLocY + j].getColor() != nowColor) {
+                        if (ChessStatus[CheckLocX + i][CheckLocY + j] != null &&
+                                ChessStatus[CheckLocX + i][CheckLocY + j].getColor() != nowColor) {
                             CheckResault = false;
                             break;
                         } else {
@@ -74,12 +87,18 @@ class GomokuRule extends Rule {
                         }
                     }
                     if (CheckResault == true) {
-                        return true;
+                        if (nowColor == Const.WHITE_CHESS)
+                            return Const.WHITE_WIN;
+                        else
+                            return Const.BLACK_WIN;
                     }
                     CheckLocX = 1;
                     CheckLocY = 1;
+
+                    //Scan LeftDown 4 chess
                     while (CheckLocX + i < Row_len && CheckLocY + j < CheckLocY) {
-                        if (ChessStatus[CheckLocX + i][j - CheckLocY].getColor() != nowColor) {
+                        if (ChessStatus[CheckLocX + i][j - CheckLocY] != null &&
+                                ChessStatus[CheckLocX + i][j - CheckLocY].getColor() != nowColor) {
                             CheckResault = false;
                             break;
                         } else {
@@ -91,13 +110,23 @@ class GomokuRule extends Rule {
                         }
                     }
                     if (CheckResault == true) {
-                        return true;
-                    }else {
-                        return false;
+                        if (nowColor == Const.WHITE_CHESS)
+                            return Const.WHITE_WIN;
+                        else
+                            return Const.BLACK_WIN;
+                    } else {
+                        if (i + 1 == Row_len && j + 1 == Col_len) {//Check if Tie
+                            if (if_fullChess == 0) {
+                                return Const.TIE;
+                            }
+                        }
+                        return Const.NO_WIN;
                     }
+                } else {
+                    if_fullChess = 1;//To Check if ChessBoard Is Full
                 }
             }
         }
-        return false;
+        return Const.NO_WIN;
     }
 }
