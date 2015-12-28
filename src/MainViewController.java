@@ -32,6 +32,11 @@ public class MainViewController implements Initializable, Observer {
         setAllActionListener();
     }
 
+    void startAndInitial() {
+        initializeBoard();
+        setAllActionOfBoardToBlackOrWhite();
+    }
+
     void initializeBoard() {
         for (int i = 0; i < 20; i++) {
             for (int i2 = 0; i2 < 20; i2++) {
@@ -45,44 +50,52 @@ public class MainViewController implements Initializable, Observer {
     }
 
     void setAllActionListener() {
-        setActionOfBoardToBlackOrWhite();
+        setAllActionOfBoardToBlackOrWhite();
 
         New_Game.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
-                initializeBoard();
-                setActionOfBoardToBlackOrWhite();
+                startAndInitial();
             }
         });
     }
 
-    void setActionOfBoardToBlackOrWhite() {
+    void setAllActionOfBoardToBlackOrWhite() {
         for (int i = 0; i < 20; i++) {
             for (int i2 = 0; i2 < 20; i2++) {
-                board[i][i2].setOnMouseClicked(new EventHandler<MouseEvent>() {
-                    @Override
-                    public void handle(MouseEvent event) {
-                        nowLocationImage = (myImageView) event.getSource();
-                        try {
-                            chessBoard.clickDot(nowLocationImage.getLoc());
-                            nowLocationImage.setOnMouseClicked(null);
-                        } catch (HasChessException e) {
-                            e.printStackTrace();
-                        }
-                    }
-                });
+                setClickedListenerToBoardImage(i, i2);
             }
         }
     }
 
-    void updateUI() {
-        // TODO: update UI
+    void setClickedListenerToBoardImage(int i, int i2) {
+        board[i][i2].setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                nowLocationImage = (myImageView) event.getSource();
+                try {
+                    chessBoard.clickDot(nowLocationImage.getLoc());
+                    nowLocationImage.setOnMouseClicked(null);
+                } catch (HasChessException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+    }
 
+    void updateChessOnBoard(Chess chessBeUpdated) {
+        int updatedX = chessBeUpdated.getNowLocX();
+        int updatedY = chessBeUpdated.getNowLocY();
+
+        if (chessBeUpdated.getColor() == Const.BLACK_CHESS)
+            board[updatedX][updatedY].setImage(black);
+        else if (chessBeUpdated.getColor() == Const.WHITE_CHESS)
+            board[updatedX][updatedY].setImage(white);
     }
 
     @Override
     public void update(Observable o, Object arg) {
-        this.updateUI();
+        this.updateChessOnBoard((Chess) arg);
     }
 }
 
@@ -99,8 +112,7 @@ class myImageView extends ImageView {
     }
 
     void setLoc(int x, int y) {
-        loc.setX(x);
-        loc.setY(y);
+        loc = new Location(x, y);
     }
 
     Location getLoc() {
