@@ -1,27 +1,32 @@
 
 public class Chess {
     Location nowLoc;
-    Integer color;
+    short color;
     Integer step;
 
-    public Chess(Integer color){
+    public Chess(short color, Location loc, int step){
         this.setColor(color);
+        this.setNowLoc(loc);
     }
 
-    public void setNowLoc(){
-
+    public void setNowLoc(Location loc){
+        this.nowLoc = new Location(loc);
     }
 
     public Location getNowLoc(){
         return new Location(this.nowLoc);
     }
 
-    public void setColor(Integer color){
+    public void setColor(short color){
         this.color = color;
     }
 
-    public void setStep(){
+    public short getColor(){
+        return this.color;
+    }
 
+    public void setStep(int step){
+        this.step = step;
     }
 
     public Integer getStep(){
@@ -67,7 +72,8 @@ class Location{
 }
 
 class ChessFactory{
-    public Chess makeChess(Integer color){
-        return new Chess(color);
+    public Chess makeChess(short color, Location loc, int step){
+        return new Chess(color, loc, step);
     }
+
 }

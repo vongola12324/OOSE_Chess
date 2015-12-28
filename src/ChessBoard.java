@@ -1,53 +1,79 @@
+import java.util.Observable;
 
-public class ChessBoard {
+public class ChessBoard extends Observable {
     ChessFactory factory = new ChessFactory();
-    static short NO_CHESS = -1;
-    static short BLACK_CHESS = 0;
-    static short WHITE_CHESS = 1;
 
-    private short boardStatus[][] = new short[19][19];
+    private Chess ChessStatus[][] = new Chess[19][19];
     private short nowPlayer;
+    private int step;
+    private Rule rule;
 
-    public ChessBoard(){
+    public ChessBoard(short Mode){
         // Clean Chess Board
         for(int i=0;i<19;i++){
             for(int j=0;j<19;j++){
-                this.boardStatus[i][j] = NO_CHESS;
+                this.ChessStatus[i][j] = null;
             }
         }
 
+        // First step = 0
+        this.step = 0;
+
         // Black Chess First
-        this.nowPlayer = BLACK_CHESS;
+        this.nowPlayer = Const.BLACK_CHESS;
+    }
+
+    private void setRule(short Mode){
+        if(Mode == Const.GO_CHESS){
+            this.rule = new GoRule();
+        } else {
+            this.rule = new GomokuRule();
+        }
     }
 
     public void clickDot(Location loc) throws HasChessException {
-        if (this.getStatus(loc) != NO_CHESS){
+        if (this.getStatus(loc) != Const.NO_CHESS){
             throw new HasChessException(loc);
-        }
-
-        if (this.checkFinish()){
-
         } else {
-            this.changePlayer();
+            // Make Chess
+            this.ChessStatus[loc.getX()][loc.getY()] = factory.makeChess(this.nowPlayer, loc, this.step);
+
+
+            // Check Finish
+            if (this.checkFinish()) {
+                // TODO:
+            } else {
+                this.changePlayer();
+            }
+
+
+            // Step ++
+            this.step++;
+
+            // Tell UI update
+            notifyObservers();
         }
 
     }
 
     private short getStatus(Location loc){
-        return this.boardStatus[loc.getX()][loc.getY()];
+        Chess target = this.ChessStatus[loc.getX()][loc.getY()];
+        if (target == null){
+            return Const.NO_CHESS;
+        } else {
+            return target.getColor();
+        }
     }
 
     private boolean checkFinish(){
-        // LOL
-        // TODO: Finish Check
-        return (int) (Math.random() * 10) > 5;
+        return this.rule.check();
     }
 
     private void changePlayer(){
-        if (this.nowPlayer == BLACK_CHESS){
-            this.nowPlayer = WHITE_CHESS;
+        if (this.nowPlayer == Const.BLACK_CHESS){
+            this.nowPlayer = Const.WHITE_CHESS;
         } else {
-            this.nowPlayer = BLACK_CHESS;
+            this.nowPlayer = Const.BLACK_CHESS;
         }
     }
 }

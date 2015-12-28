@@ -10,10 +10,12 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 
 import java.net.URL;
+import java.util.Observable;
+import java.util.Observer;
 import java.util.ResourceBundle;
 
-public class MainViewController implements Initializable {
-    private ChessBoard chessBoard = new ChessBoard();
+public class MainViewController implements Initializable, Observer {
+    private ChessBoard chessBoard = new ChessBoard(Const.GOMOKU_CHESS);
     private myImageView[][] board = new myImageView[20][20];
     private myImageView nowLocationImage;
     private Image black = new Image("image/black.jpg");
@@ -61,34 +63,27 @@ public class MainViewController implements Initializable {
                     @Override
                     public void handle(MouseEvent event) {
                         nowLocationImage = (myImageView) event.getSource();
-                        chessBoard.clickDot(nowLocationImage.getLoc());
-                        nowLocationImage.setOnMouseClicked(null);
+                        try {
+                            chessBoard.clickDot(nowLocationImage.getLoc());
+                            nowLocationImage.setOnMouseClicked(null);
+                        } catch (HasChessException e) {
+                            e.printStackTrace();
+                        }
                     }
                 });
             }
         }
     }
 
-//    void ImageToBlackOrWhite(ImageView temp) {
-//        if(isNowBlackOrWhite() == 0) {
-//            temp.setImage(black);
-//        } else {
-//            temp.setImage(white);
-//        }
-//    }
-//
-//    int isNowBlackOrWhite() {
-//        if(gameRound % 2 == 0) {
-//            return 0;   //black
-//        } else {
-//            return 1;   //white
-//        }
-//    }
-
     void updateUI() {
+        // TODO: update UI
 
     }
 
+    @Override
+    public void update(Observable o, Object arg) {
+        this.updateUI();
+    }
 }
 
 
