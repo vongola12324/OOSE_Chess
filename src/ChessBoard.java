@@ -51,7 +51,7 @@ public class ChessBoard extends Observable {
             this.step++;
 
             // Tell UI update
-            notifyObservers();
+            notifyObservers(ChessStatus[loc.getX()][loc.getY()]);
         }
 
     }
@@ -66,7 +66,7 @@ public class ChessBoard extends Observable {
     }
 
     private boolean checkFinish(){
-        return this.rule.check();
+        return this.rule.check(ChessStatus);
     }
 
     private void changePlayer(){
