@@ -44,8 +44,10 @@ public class ChessBoard {
 
             // Check Finish
             short winner = this.checkFinish();
-            if (winner != Const.NO_WIN && winner != Const.TIE) {
+            if (winner == Const.NO_WIN) {
                 this.changePlayer();
+            } else if(winner == Const.TIE) {
+                System.out.println("TIE");
             } else {
                 if(winner == Const.BLACK_WIN) {
                     System.out.println("Black WIN");
