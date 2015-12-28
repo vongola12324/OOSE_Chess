@@ -42,8 +42,6 @@ public class ChessBoard {
             // Make Chess
             this.ChessStatus[loc.getX()][loc.getY()] = factory.makeChess(this.nowPlayer, loc, this.step);
 
-            System.out.println(nowPlayer);
-
             // Check Finish
             short winner = this.checkFinish();
             if (winner != Const.NO_WIN && winner != Const.TIE) {
