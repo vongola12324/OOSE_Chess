@@ -100,7 +100,7 @@ class GomokuRule extends Rule {
         int Row_len = ChessStatus.length, Col_len = ChessStatus[0].length, LocX = CheckChess.getNowLocX(), LocY = CheckChess.getNowLocY();
         int CheckPointX = LocX, CheckPointY = LocY;
         int CheckResault = 0;
-        while (CheckPointX < Col_len && CheckPointY < Row_len && CheckPointX < LocX + 6 && CheckPointY < LocY + 6 && ChessStatus[CheckPointX][CheckPointY] != null) {
+        while (CheckPointX < Row_len && CheckPointY < Col_len && CheckPointX < LocX + 6 && CheckPointY < LocY + 6 && ChessStatus[CheckPointX][CheckPointY] != null) {
             if (CheckChess.color == ChessStatus[CheckPointX][CheckPointY].color) {
                 CheckResault++;
             }
@@ -121,7 +121,7 @@ class GomokuRule extends Rule {
         int Row_len = ChessStatus.length, Col_len = ChessStatus[0].length, LocX = CheckChess.getNowLocX(), LocY = CheckChess.getNowLocY();
         int CheckPointX = LocX, CheckPointY = LocY;
         int CheckResault = 0;
-        while (CheckPointX < Col_len && CheckPointY < Row_len && CheckPointX < LocX + 6 && CheckPointY < LocY + 6 && ChessStatus[CheckPointX][CheckPointY] != null) {
+        while (CheckPointX < Row_len && CheckPointY > Col_len && CheckPointX < LocX + 6 && CheckPointY < LocY + 6 && ChessStatus[CheckPointX][CheckPointY] != null) {
             if (CheckChess.color == ChessStatus[CheckPointX][CheckPointY].color) {
                 CheckResault++;
             }
