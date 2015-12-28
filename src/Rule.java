@@ -45,12 +45,13 @@ class GomokuRule extends Rule {
                         }
                         CheckPoint++;
                     }
-                    if (CheckResault == true) {
+                    if (CheckResault == true) {//for leftscan resault
                         if (nowColor == Const.WHITE_CHESS)
                             return Const.WHITE_WIN;
                         else
                             return Const.BLACK_WIN;
                     }
+
                     //Scan Down 4 chess
                     CheckPoint = i + 1;
                     while (CheckPoint + 1 < Row_len && CheckPoint < i + 4) {
@@ -63,7 +64,7 @@ class GomokuRule extends Rule {
                         }
                         CheckPoint++;
                     }
-                    if (CheckResault == true) {
+                    if (CheckResault == true) {//for downscan resault
                         if (nowColor == Const.WHITE_CHESS)
                             return Const.WHITE_WIN;
                         else
@@ -86,7 +87,7 @@ class GomokuRule extends Rule {
                             CheckLocY++;
                         }
                     }
-                    if (CheckResault == true) {
+                    if (CheckResault == true) {//for leftupScan resault
                         if (nowColor == Const.WHITE_CHESS)
                             return Const.WHITE_WIN;
                         else
@@ -108,8 +109,8 @@ class GomokuRule extends Rule {
                             CheckLocX++;
                             CheckLocY++;
                         }
-                    }
-                    if (CheckResault == true) {
+                    }//
+                    if (CheckResault == true) {//for leftdownScan resault
                         if (nowColor == Const.WHITE_CHESS)
                             return Const.WHITE_WIN;
                         else
