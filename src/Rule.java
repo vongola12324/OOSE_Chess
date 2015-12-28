@@ -12,12 +12,101 @@ class GoRule extends Rule implements Eatable {
     @Override
     public short check(final Chess[][] ChessStatus) {
         // TODO: GO/FinishCheck
+
+
         return Const.NO_WIN;
     }
 
     @Override
     public void eat(Chess[][] ChessStatus) {
         // TODO: Eat Dot
+        int Row_len = ChessStatus.length, Col_len = ChessStatus[0].length, i, j, CheckLocX, CheckLocY;
+        int[][] Mapping = new int[Row_len][Col_len], CanBeEat = new int[Row_len][Col_len], Stack = new int[Row_len][Col_len];
+        int[][][] CheckPoint = new int[Row_len][Col_len][4];
+        //CheckPoint Comment
+        //Up 0 -> Left 1 -> Down 2 -> Right 3
+        //NotThing 0 , Same Color 1, Diff Color 2, NeverGo 3
+
+        boolean EatAble = false;
+
+        ArrayIniter(ChessStatus, Mapping, CanBeEat, Stack, CheckPoint, Row_len, Col_len);//init array
+
+        //Mapping
+        for (i = 0; i < Row_len; i++) {
+            for (j = 0; j < Col_len; j++) {
+                CheckLocX = i;
+                CheckLocY = j;
+                if (Mapping[i][j] != 0) {
+                    //==================================================================================//
+                    //CheckPoint Begin//
+                    if (i + 1 > Row_len) {//check if has wall
+                        CheckPoint[i][j][1] = 2;
+                    } else if (i - 1 < 0) {
+                        CheckPoint[i][j][4] = 2;
+                    } else if (j + 1 > Col_len) {
+                        CheckPoint[i][j][0] = 2;
+                    } else if (j - 1 < 0) {
+                        CheckPoint[i][j][3] = 2;
+                        /////////////////////////////////////////////////////////////////////////
+                    } else if (Mapping[i][j] != Mapping[i][j + 1] && Mapping[i][j + 1] != 0) {//check if Diff Color
+                        CheckPoint[i][j][0] = 2;
+                    } else if (Mapping[i][j] != Mapping[i + 1][j] && Mapping[i + 1][j] != 0) {
+                        CheckPoint[i][j][1] = 2;
+                    } else if (Mapping[i][j] != Mapping[i][j - 1] && Mapping[i][j - 1] != 0) {
+                        CheckPoint[i][j][2] = 2;
+                    } else if (Mapping[i][j] != Mapping[i - 1][j] && Mapping[i - 1][j] != 0) {
+                        CheckPoint[i][j][3] = 2;
+                        //////////////////////////////////////////////////////////////////////////
+                    } else if (Mapping[i][j] == Mapping[i][j + 1]) {//check if Same Color
+                        CheckPoint[i][j][0] = 1;
+                    } else if (Mapping[i][j] != Mapping[i + 1][j]) {
+                        CheckPoint[i][j][1] = 1;
+                    } else if (Mapping[i][j] != Mapping[i][j - 1]) {
+                        CheckPoint[i][j][2] = 1;
+                    } else if (Mapping[i][j] != Mapping[i - 1][j]) {
+                        CheckPoint[i][j][3] = 1;
+                        ///////////////////////////////////////////////////////////////////////////
+                    } else if (Mapping[i][j + 1] == 0) {//check if Nothing here
+                        CheckPoint[i][j][0] = 0;
+                        EatAble = false;
+                    } else if (Mapping[i + 1][j] == 0) {
+                        CheckPoint[i][j][1] = 0;
+                        EatAble = false;
+                    } else if (Mapping[i][j - 1] == 0) {
+                        CheckPoint[i][j][2] = 0;
+                        EatAble = false;
+                    } else if (Mapping[i - 1][j] == 0) {
+                        CheckPoint[i][j][3] = 0;
+                        EatAble = false;
+                        ///////////////////////////////////////////////////////////////////////////
+                    }
+                    //CheckPoint End//
+                    //==================================================================================//
+                }
+            }
+        }
+
+    }
+
+    public static void ArrayIniter(Chess[][] ChessStatus, int[][] Mapping, int[][] CanBeEat, int[][] Stack, int[][][] CheckPoint, int Row_len, int Col_len) {
+        for (int i = 0; i < Row_len; i++) {
+            for (int j = 0; j < Col_len; j++) {
+                if (ChessStatus[i][j] == null) {
+                    Mapping[i][j] = Const.NO_CHESS;
+                } else {
+                    Mapping[i][j] = ChessStatus[i][j].color;
+                }
+                CanBeEat[i][j] = 0;
+                Stack[i][j] = 0;
+            }
+        }
+        for (int[][] elementI : CheckPoint) {
+            for (int[] elementJ : elementI) {
+                for (int elementK : elementJ) {
+                    elementK = 3;
+                }
+            }
+        }
     }
 }
 
