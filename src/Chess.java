@@ -20,11 +20,6 @@ public class Chess {
         this.color = color;
     }
 
-    public Integer getColor(){
-        MainViewController getColor = new MainViewController();
-        return  getColor.isNowBlackOrWhite();//0 black,1 white  this is in MainViewController
-    }
-
     public void setStep(){
 
     }
@@ -36,7 +31,7 @@ public class Chess {
 }
 
 class Location{
-    Integer x, y;
+    private Integer x, y;
 
     public Location(Integer x, Integer y){
         this.x = new Integer(x);
@@ -56,6 +51,14 @@ class Location{
         return this.y;
     }
 
+    public void setX(int x) {
+        this.x = x;
+    }
+
+    public void setY(int y) {
+        this.y = y;
+    }
+
 
     @Override
     public String toString(){
@@ -67,5 +70,4 @@ class ChessFactory{
     public Chess makeChess(Integer color){
         return new Chess(color);
     }
-
 }

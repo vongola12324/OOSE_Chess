@@ -3,74 +3,112 @@ import javafx.event.EventHandler;
 import javafx.event.EventType;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
+
 import java.net.URL;
 import java.util.ResourceBundle;
 
 public class MainViewController implements Initializable {
-    private static int gameRound = 1;
-    private ImageView[][] board = new ImageView[20][20];
+    private ChessBoard chessBoard = new ChessBoard();
+    private myImageView[][] board = new myImageView[20][20];
+    private myImageView nowLocationImage;
     private Image black = new Image("image/black.jpg");
     private Image white = new Image("image/white.jpg");
 
-    private ChessBoard chessBoard = new ChessBoard();
-
     @FXML
     GridPane MainView_Board;
+    @FXML
+    Button New_Game;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         initializeBoard();
-        setActionListener();
+        setAllActionListener();
     }
 
     void initializeBoard() {
-        for(int i = 0; i < 20; i++) {
-            for(int i2 = 0; i2 < 20; i2++) {
-                board[i][i2] = new ImageView("image/board.jpg");
+        for (int i = 0; i < 20; i++) {
+            for (int i2 = 0; i2 < 20; i2++) {
+                board[i][i2] = new myImageView("image/board.jpg");
                 board[i][i2].setFitHeight(37);
                 board[i][i2].setFitWidth(38);
+                board[i][i2].setLoc(i, i2);
                 MainView_Board.add(board[i][i2], i, i2);
             }
         }
     }
 
-    void setActionListener() {
+    void setAllActionListener() {
         setActionOfBoardToBlackOrWhite();
+
+        New_Game.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                initializeBoard();
+                setActionOfBoardToBlackOrWhite();
+            }
+        });
     }
 
     void setActionOfBoardToBlackOrWhite() {
-        for(int i = 0; i < 20; i++) {
-            for(int i2 = 0; i2 < 20; i2++)
+        for (int i = 0; i < 20; i++) {
+            for (int i2 = 0; i2 < 20; i2++) {
                 board[i][i2].setOnMouseClicked(new EventHandler<MouseEvent>() {
                     @Override
                     public void handle(MouseEvent event) {
-                        ImageView image = (ImageView) event.getSource();
-                        ImageToBlackOrWhite(image);
-                        image.setOnMouseClicked(null);
-                        gameRound++;
+                        nowLocationImage = (myImageView) event.getSource();
+                        chessBoard.clickDot(nowLocationImage.getLoc());
+                        nowLocationImage.setOnMouseClicked(null);
                     }
                 });
+            }
         }
     }
 
-    void ImageToBlackOrWhite(ImageView temp) {
-        if(isNowBlackOrWhite() == 0) {
-            temp.setImage(black);
-        } else {
-            temp.setImage(white);
-        }
+//    void ImageToBlackOrWhite(ImageView temp) {
+//        if(isNowBlackOrWhite() == 0) {
+//            temp.setImage(black);
+//        } else {
+//            temp.setImage(white);
+//        }
+//    }
+//
+//    int isNowBlackOrWhite() {
+//        if(gameRound % 2 == 0) {
+//            return 0;   //black
+//        } else {
+//            return 1;   //white
+//        }
+//    }
+
+    void updateUI() {
+
     }
 
-    int isNowBlackOrWhite() {
-        if(gameRound % 2 == 0) {
-            return 0;   //black
-        } else {
-            return 1;   //white
-        }
+}
+
+
+class myImageView extends ImageView {
+    private Location loc;
+
+    myImageView(String imagePath) {
+        super(imagePath);
     }
 
+    void setLoc(Location loc) {
+        this.loc = loc;
+    }
+
+    void setLoc(int x, int y) {
+        loc.setX(x);
+        loc.setY(y);
+    }
+
+    Location getLoc() {
+        return loc;
+    }
 }
