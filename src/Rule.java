@@ -1,10 +1,13 @@
 abstract class Rule {
     public abstract short check(Chess[][] ChessStatus);
 
-    public abstract void eat(Chess[][] ChessStatus);
 }
 
-class GoRule extends Rule {
+interface Eatable {
+    public void eat(Chess[][] ChessStatus);
+}
+
+class GoRule extends Rule implements Eatable {
 
     @Override
     public short check(final Chess[][] ChessStatus) {
@@ -96,11 +99,5 @@ class GomokuRule extends Rule {
             }
         }
         return false;
-    }
-
-    @Override
-    @Deprecated
-    public void eat(Chess[][] ChessStatus) {
-        // Do nothing
     }
 }
