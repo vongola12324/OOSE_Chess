@@ -11,7 +11,6 @@ import java.util.ResourceBundle;
 
 public class MainViewController implements Initializable {
     private myImageView[][] board = new myImageView[20][20];
-    private myImageView nowLocationImage;
     private Image black = new Image("image/black.jpg");
     private Image white = new Image("image/white.jpg");
 
