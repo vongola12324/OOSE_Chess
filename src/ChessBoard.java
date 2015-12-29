@@ -43,12 +43,12 @@ public class ChessBoard {
         return winner;
     }
 
-    private short checkFinish() {
+    public short checkFinish() {
         return this.rule.check(ChessStatus);
     }
 
     public short checkToLose() {
-        return this.rule.toLose(ChessStatus);
+        return this.rule.lose(ChessStatus);
     }
 
     public void changePlayer() {

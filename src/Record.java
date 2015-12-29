@@ -25,8 +25,8 @@ public class Record {
                 if (ChessStatus[i][j] != null){
                     Chess.put("Color", ChessStatus[i][j].getColor());
                     JSONObject ChessLoc = new JSONObject();
-                    ChessLoc.put("x", ChessStatus[i][j].getNowLoc().getX());
-                    ChessLoc.put("y", ChessStatus[i][j].getNowLoc().getY());
+                    ChessLoc.put("x", ChessStatus[i][j].getLoc().getX());
+                    ChessLoc.put("y", ChessStatus[i][j].getLoc().getY());
                     Chess.put("Location", ChessLoc);
                     Chess.put("Step", ChessStatus[i][j].getStep());
                     ChessArray.put(Chess);
