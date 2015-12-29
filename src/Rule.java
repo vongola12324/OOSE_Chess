@@ -1,3 +1,5 @@
+import com.sun.rowset.internal.Row;
+
 abstract class Rule {
     public abstract short check(Chess[][] ChessStatus);
 
@@ -12,7 +14,27 @@ class GoRule extends Rule implements Eatable {
     @Override
     public short check(final Chess[][] ChessStatus) {
         // TODO: GO/FinishCheck
-
+        int Row_len = ChessStatus.length, Col_len = ChessStatus[0].length;
+        int WhiteColorCounter = 0, BlackColorCounter = 0;
+        for (int i = 0; i < Row_len; i++) {
+            for (int j = 0; j < Col_len; j++) {
+                if (ChessStatus[i][j] != null) {
+                    short nowColor = ChessStatus[i][j].getColor();
+                    if (nowColor == Const.WHITE_CHESS) {
+                        WhiteColorCounter++;
+                    } else {
+                        BlackColorCounter++;
+                    }
+                }
+            }
+        }
+        if (WhiteColorCounter >= 177 || BlackColorCounter >= 183) {
+            if (WhiteColorCounter >= 177 && BlackColorCounter < 183) {
+                return Const.WHITE_WIN;
+            } else if (BlackColorCounter >= 183 && WhiteColorCounter < 177) {
+                return Const.BLACK_WIN;
+            }
+        }
 
         return Const.NO_WIN;
     }
@@ -24,8 +46,7 @@ class GoRule extends Rule implements Eatable {
         int[][] Mapping = new int[Row_len][Col_len], CanBeEat = new int[Row_len][Col_len], HasGone = new int[Row_len][Col_len];
         int[][][] CheckPoint = new int[Row_len][Col_len][4], Stack = new int[Row_len][Col_len][2], CanGo = new int[Row_len][Col_len][4];
         //CheckPoint Comment
-        //Up 0 -> Left 1 -> Down 2 -> Right 3
-        //NotThing 0 , Same Color 1, Diff Color 2, NeverGo 3
+        //Order: Up  -> Left  -> Down  -> Right
 
         boolean EatAble = false;
 
