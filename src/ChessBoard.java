@@ -1,7 +1,7 @@
 public class ChessBoard {
     ChessFactory factory = new ChessFactory();
 
-    private Chess ChessStatus[][] = new Chess[20][20];
+    private Chess ChessStatus[][] = new BWChess[20][20];
     private short nowPlayer;
     private int step;
     private Rule rule;
@@ -44,11 +44,11 @@ public class ChessBoard {
     }
 
     public short checkFinish() {
-        return this.rule.check(ChessStatus);
+        return this.rule.check((BWChess[][])ChessStatus);
     }
 
     public short checkToLose() {
-        return this.rule.toLose(ChessStatus);
+        return this.rule.toLose((BWChess[][])ChessStatus);
     }
 
     public void changePlayer() {
@@ -63,8 +63,8 @@ public class ChessBoard {
         return nowPlayer;
     }
 
+    @Deprecated
     public void Surrender() {
-        // TODO: Show Winner (UI)
         System.out.println("Winner: " + (this.nowPlayer == Const.BLACK_CHESS ? "BLACK" : "WHITE"));
     }
 }
