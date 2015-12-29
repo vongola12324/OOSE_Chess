@@ -1,8 +1,8 @@
 
 public class Chess {
-    Location nowLoc;
-    short color;
-    Integer step;
+    private Location nowLoc;
+    private short color;
+    private Integer step;
 
     public Chess(short color, Location loc, int step) {
         this.setColor(color);

@@ -1,6 +1,4 @@
-import javafx.event.Event;
 import javafx.event.EventHandler;
-import javafx.event.EventType;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
@@ -11,8 +9,6 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 
 import java.net.URL;
-import java.util.Observable;
-import java.util.Observer;
 import java.util.ResourceBundle;
 
 public class MainViewController implements Initializable {
@@ -41,13 +37,13 @@ public class MainViewController implements Initializable {
         alert.setContentText("Click Yes to restart the game.");
     }
 
-    void startAndInitial() {
+    void restartAndInitial() {
         initializeBoard();
         setAllActionOfBoardToBlackOrWhite();
     }
 
     void initializeBoard() {
-        chessBoard = new ChessBoard(Const.GOMOKU_CHESS);
+        chessBoard = new ChessBoard(new GomokuRule());
         for (int i = 0; i < 20; i++) {
             for (int i2 = 0; i2 < 20; i2++) {
                 board[i][i2] = new myImageView("image/board.jpg");
@@ -62,7 +58,7 @@ public class MainViewController implements Initializable {
     void setAllActionListener() {
         setAllActionOfBoardToBlackOrWhite();
 
-        New_Game.setOnMouseClicked(event -> startAndInitial());
+        New_Game.setOnMouseClicked(event -> restartAndInitial());
     }
 
     void setAllActionOfBoardToBlackOrWhite() {
@@ -82,8 +78,7 @@ public class MainViewController implements Initializable {
                     updateImageToColor(chessBoard.getNowPlayer());
                     short result = chessBoard.clickDot(nowLocationImage.getLoc());
                     nowLocationImage.setOnMouseClicked(null);
-                    ifWinThenShowAlert(result);
-
+                    ifWinThenShowAlertAndRestart(result);
                 } catch (HasChessException e) {
                     e.printStackTrace();
                 }
@@ -92,22 +87,23 @@ public class MainViewController implements Initializable {
     }
 
     void updateImageToColor(short color) {
-        if(color == Const.BLACK_CHESS)
+        if (color == Const.BLACK_CHESS)
             nowLocationImage.setImage(black);
         else
             nowLocationImage.setImage(white);
     }
 
-    void ifWinThenShowAlert(short result) {
-        if(result != Const.NO_WIN) {
+    void ifWinThenShowAlertAndRestart(short result) {
+        if (result != Const.NO_WIN) {
             showAlert(result);
+            restartAndInitial();
         }
     }
 
     void showAlert(short result) {
-        if(result == Const.BLACK_WIN) {
+        if (result == Const.BLACK_WIN) {
             alert.setHeaderText("BLACK Win!");
-        } else if(result == Const.WHITE_WIN) {
+        } else if (result == Const.WHITE_WIN) {
             alert.setHeaderText("WHITE Win!");
         } else {
             alert.setHeaderText("TIE!");
@@ -124,15 +120,15 @@ class myImageView extends ImageView {
         super(imagePath);
     }
 
-    void setLoc(Location loc) {
+    public void setLoc(Location loc) {
         this.loc = loc;
     }
 
-    void setLoc(int x, int y) {
+    public void setLoc(int x, int y) {
         loc = new Location(x, y);
     }
 
-    Location getLoc() {
+    public Location getLoc() {
         return loc;
     }
 }

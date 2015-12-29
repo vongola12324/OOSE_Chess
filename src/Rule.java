@@ -173,7 +173,7 @@ class GoRule extends Rule implements Eatable {
                 if (ChessStatus[i][j] == null) {
                     Mapping[i][j] = Const.NO_CHESS;
                 } else {
-                    Mapping[i][j] = ChessStatus[i][j].color;
+                    Mapping[i][j] = ChessStatus[i][j].getColor();
                 }
                 HasGone[i][j] = Const.HAVENGONE;
                 CanBeEat[i][j] = Const.CANNOTEAT;
@@ -280,13 +280,13 @@ class GomokuRule extends Rule {
         int CheckPoint = LocY;
         int CheckResault = 0;
         while (CheckPoint < Row_len && CheckPoint < LocY + 6 && ChessStatus[LocX][CheckPoint] != null) {
-            if (CheckChess.color == ChessStatus[LocX][CheckPoint].color) {
+            if (CheckChess.getColor() == ChessStatus[LocX][CheckPoint].getColor()) {
                 CheckResault++;
             }
             CheckPoint++;
         }
         if (CheckResault >= 5) {
-            if (CheckChess.color == Const.WHITE_CHESS) {
+            if (CheckChess.getColor() == Const.WHITE_CHESS) {
                 return Const.WHITE_WIN;
             } else {
                 return Const.BLACK_WIN;
@@ -300,13 +300,13 @@ class GomokuRule extends Rule {
         int CheckPoint = LocX;
         int CheckResault = 0;
         while (CheckPoint < Col_len && CheckPoint < LocX + 6 && ChessStatus[CheckPoint][LocY] != null) {
-            if (CheckChess.color == ChessStatus[CheckPoint][LocY].color) {
+            if (CheckChess.getColor() == ChessStatus[CheckPoint][LocY].getColor()) {
                 CheckResault++;
             }
             CheckPoint++;
         }
         if (CheckResault >= 5) {
-            if (CheckChess.color == Const.WHITE_CHESS) {
+            if (CheckChess.getColor() == Const.WHITE_CHESS) {
                 return Const.WHITE_WIN;
             } else {
                 return Const.BLACK_WIN;
@@ -320,14 +320,14 @@ class GomokuRule extends Rule {
         int CheckPointX = LocX, CheckPointY = LocY;
         int CheckResault = 0;
         while (CheckPointX < Row_len && CheckPointY < Col_len && CheckPointX < LocX + 6 && CheckPointY < LocY + 6 && ChessStatus[CheckPointX][CheckPointY] != null) {
-            if (CheckChess.color == ChessStatus[CheckPointX][CheckPointY].color) {
+            if (CheckChess.getColor() == ChessStatus[CheckPointX][CheckPointY].getColor()) {
                 CheckResault++;
             }
             CheckPointX++;
             CheckPointY++;
         }
         if (CheckResault >= 5) {
-            if (CheckChess.color == Const.WHITE_CHESS) {
+            if (CheckChess.getColor() == Const.WHITE_CHESS) {
                 return Const.WHITE_WIN;
             } else {
                 return Const.BLACK_WIN;
@@ -341,14 +341,14 @@ class GomokuRule extends Rule {
         int CheckPointX = LocX, CheckPointY = LocY;
         int CheckResault = 0;
         while (CheckPointX < Row_len && CheckPointY > 0 && CheckPointX < LocX + 6 && CheckPointY < LocY + 6 && ChessStatus[CheckPointX][CheckPointY] != null) {
-            if (CheckChess.color == ChessStatus[CheckPointX][CheckPointY].color) {
+            if (CheckChess.getColor() == ChessStatus[CheckPointX][CheckPointY].getColor()) {
                 CheckResault++;
             }
             CheckPointX++;
             CheckPointY--;
         }
         if (CheckResault >= 5) {
-            if (CheckChess.color == Const.WHITE_CHESS) {
+            if (CheckChess.getColor() == Const.WHITE_CHESS) {
                 return Const.WHITE_WIN;
             } else {
                 return Const.BLACK_WIN;

@@ -9,16 +9,14 @@ public class ChessBoard {
     private int step;
     private Rule rule;
 
-    public ChessBoard(short Mode){
+    public ChessBoard(Rule rule){
+        initializeGame();
         // Clean Chess Board
-        for(int i=0;i<20;i++){
-            for(int j=0;j<20;j++){
-                this.ChessStatus[i][j] = null;
-            }
-        }
+        initializeChessBoard();
+        this.rule = rule;
+    }
 
-        setRule(Mode);
-
+    private void initializeGame() {
         // First step = 0
         this.step = 0;
 
@@ -26,12 +24,11 @@ public class ChessBoard {
         this.nowPlayer = Const.BLACK_CHESS;
     }
 
-
-    private void setRule(short Mode){
-        if(Mode == Const.GO_CHESS){
-            this.rule = new GoRule();
-        } else {
-            this.rule = new GomokuRule();
+    private void initializeChessBoard() {
+        for(int i=0;i<20;i++){
+            for(int j=0;j<20;j++){
+                this.ChessStatus[i][j] = null;
+            }
         }
     }
 
