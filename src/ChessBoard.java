@@ -37,7 +37,7 @@ public class ChessBoard {
         short winner = this.checkFinish();
 
         if (winner == Const.NO_WIN) {
-            this.changePlayer();
+            //this.changePlayer();
             step++;
         }
         return winner;
