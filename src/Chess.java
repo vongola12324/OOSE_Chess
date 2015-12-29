@@ -13,17 +13,15 @@ public class Chess {
         this.loc = new Location(loc);
     }
 
+    @Deprecated
     public Location getLoc() {
         return new Location(this.loc);
     }
 
-
-    @Deprecated
     public int getNowLocX() {
         return this.loc.getX();
     }
 
-    @Deprecated
     public int getNowLocY() {
         return this.loc.getY();
     }
@@ -89,7 +87,7 @@ abstract class Factory {
 
 class ChessFactory extends Factory {
     public Chess makeChess(short color, Location loc, int step) {
-        this.make(color, loc, step);
+        return this.make(color, loc, step);
     }
 
     @Override
