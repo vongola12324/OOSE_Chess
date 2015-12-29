@@ -2,6 +2,7 @@ import com.sun.rowset.internal.Row;
 
 abstract class Rule {
     public abstract short check(Chess[][] ChessStatus);
+    public abstract short toLose(Chess[][] ChessStatus);
 
 }
 
@@ -42,6 +43,11 @@ class GoRule extends Rule implements Eatable {
             return Const.TIE;
         }
         return Const.NO_WIN;
+    }
+
+    @Override
+    public short toLose(Chess[][] ChessStatus) {
+        return check(ChessStatus);
     }
 
     @Override
