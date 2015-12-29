@@ -3,6 +3,7 @@ import javafx.event.EventHandler;
 import javafx.event.EventType;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -21,6 +22,7 @@ public class MainViewController implements Initializable {
     private Image white = new Image("image/white.jpg");
 
     private ChessBoard chessBoard;
+    private final Alert alert = new Alert(Alert.AlertType.INFORMATION);
 
     @FXML
     GridPane MainView_Board;
@@ -31,6 +33,12 @@ public class MainViewController implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
         initializeBoard();
         setAllActionListener();
+        initialAlert();
+    }
+
+    void initialAlert() {
+        alert.setTitle("Win!");
+        alert.setContentText("Click Yes to restart the game.");
     }
 
     void startAndInitial() {
@@ -54,12 +62,7 @@ public class MainViewController implements Initializable {
     void setAllActionListener() {
         setAllActionOfBoardToBlackOrWhite();
 
-        New_Game.setOnMouseClicked(new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent event) {
-                startAndInitial();
-            }
-        });
+        New_Game.setOnMouseClicked(event -> startAndInitial());
     }
 
     void setAllActionOfBoardToBlackOrWhite() {
@@ -77,8 +80,10 @@ public class MainViewController implements Initializable {
                 nowLocationImage = (myImageView) event.getSource();
                 try {
                     updateImageToColor(chessBoard.getNowPlayer());
-                    chessBoard.clickDot(nowLocationImage.getLoc());
+                    short result = chessBoard.clickDot(nowLocationImage.getLoc());
                     nowLocationImage.setOnMouseClicked(null);
+                    ifWinThenShowAlert(result);
+
                 } catch (HasChessException e) {
                     e.printStackTrace();
                 }
@@ -91,6 +96,23 @@ public class MainViewController implements Initializable {
             nowLocationImage.setImage(black);
         else
             nowLocationImage.setImage(white);
+    }
+
+    void ifWinThenShowAlert(short result) {
+        if(result != Const.NO_WIN) {
+            showAlert(result);
+        }
+    }
+
+    void showAlert(short result) {
+        if(result == Const.BLACK_WIN) {
+            alert.setHeaderText("BLACK Win!");
+        } else if(result == Const.WHITE_WIN) {
+            alert.setHeaderText("WHITE Win!");
+        } else {
+            alert.setHeaderText("TIE!");
+        }
+        alert.showAndWait();
     }
 }
 

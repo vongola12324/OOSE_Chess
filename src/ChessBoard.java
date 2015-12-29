@@ -35,7 +35,7 @@ public class ChessBoard {
         }
     }
 
-    public void clickDot(Location loc) throws HasChessException {
+    public short clickDot(Location loc) throws HasChessException {
         if (this.getStatus(loc) != Const.NO_CHESS){
             throw new HasChessException(loc);
         } else {
@@ -46,19 +46,23 @@ public class ChessBoard {
             short winner = this.checkFinish();
             if (winner == Const.NO_WIN) {
                 this.changePlayer();
+                return Const.NO_WIN;
             } else if(winner == Const.TIE) {
                 System.out.println("TIE");
+                return Const.TIE;
             } else {
                 if(winner == Const.BLACK_WIN) {
+                    step ++;
                     System.out.println("Black WIN");
+                    return Const.BLACK_WIN;
                 } else {
+                    step ++;
                     System.out.println("White WIN");
+                    return Const.WHITE_WIN;
                 }
             }
-
-            // Step ++
-            this.step++;
         }
+
     }
 
     private short getStatus(Location loc){
