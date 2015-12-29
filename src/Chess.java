@@ -1,28 +1,31 @@
 
 public class Chess {
-    private Location nowLoc;
+    private Location loc;
     private short color;
     private Integer step;
 
     public Chess(short color, Location loc, int step) {
         this.setColor(color);
-        this.setNowLoc(loc);
+        this.setLoc(loc);
     }
 
-    public void setNowLoc(Location loc) {
-        this.nowLoc = new Location(loc);
+    public void setLoc(Location loc) {
+        this.loc = new Location(loc);
     }
 
-    public Location getNowLoc() {
-        return new Location(this.nowLoc);
+    public Location getLoc() {
+        return new Location(this.loc);
     }
 
+
+    @Deprecated
     public int getNowLocX() {
-        return this.nowLoc.getX();
+        return this.loc.getX();
     }
 
+    @Deprecated
     public int getNowLocY() {
-        return this.nowLoc.getY();
+        return this.loc.getY();
     }
 
     public void setColor(short color) {
