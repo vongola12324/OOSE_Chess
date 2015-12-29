@@ -1,11 +1,13 @@
+import com.sun.rowset.internal.Row;
 
 abstract class Rule {
     public abstract short check(Chess[][] ChessStatus);
-    public abstract short lose(Chess[][] ChessStatus);
+    public abstract short toLose(Chess[][] ChessStatus);
+
 }
 
 interface Eatable {
-    void eat(Chess[][] ChessStatus);
+    public void eat(Chess[][] ChessStatus);
 }
 
 class GoRule extends Rule implements Eatable {
@@ -44,8 +46,8 @@ class GoRule extends Rule implements Eatable {
     }
 
     @Override
-    public short lose(Chess[][] ChessStatus) {
-        return 0;
+    public short toLose(Chess[][] ChessStatus) {
+        return check(ChessStatus);
     }
 
     @Override
@@ -304,12 +306,6 @@ class GomokuRule extends Rule {
         }
         return Const.NO_WIN;
     }
-
-    @Override
-    public short lose(Chess[][] ChessStatus) {
-        return 0;
-    }
-
     public short toLose(final Chess[][] ChessStatus){
         int Row_len = ChessStatus.length, Col_len = ChessStatus[0].length;
         int WhiteCCounter = 0, BlackCCounter = 0;
