@@ -300,7 +300,7 @@ class GomokuRule extends Rule {
         }
         return Const.NO_WIN;
     }
-    public short ToLose(final Chess[][] ChessStatus){
+    public short toLose(final Chess[][] ChessStatus){
         int Row_len = ChessStatus.length, Col_len = ChessStatus[0].length;
         int WhiteCCounter = 0, BlackCCounter = 0;
         BlackCCounter --;
