@@ -48,7 +48,7 @@ public class ChessBoard {
     }
 
     public short checkToLose() {
-        return this.rule.lose(ChessStatus);
+        return this.rule.toLose(ChessStatus);
     }
 
     public void changePlayer() {
