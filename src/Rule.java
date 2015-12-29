@@ -300,7 +300,31 @@ class GomokuRule extends Rule {
         }
         return Const.NO_WIN;
     }
+    public short ToLose(final Chess[][] ChessStatus){
+        int Row_len = ChessStatus.length, Col_len = ChessStatus[0].length;
+        int WhiteCCounter = 0, BlackCCounter = 0;
+        BlackCCounter --;
+        for (int i = 0; i < Row_len; i++) {
+            for (int j = 0; j < Col_len; j++) {
+                if (ChessStatus[i][j] != null) {
+                    short nowColor = ChessStatus[i][j].getColor();
+                    if (nowColor == Const.WHITE_CHESS) {
+                        WhiteCCounter++;
+                    } else if(nowColor == Const.BLACK_CHESS){
+                        BlackCCounter++;
+                    }
+                }
+            }
+        }
+        if(WhiteCCounter > BlackCCounter){
+            return Const.WHITE_WIN;
+        }else if(BlackCCounter > WhiteCCounter){
+            return Const.BLACK_WIN;
+        }else{
+            return Const.TIE;
+        }
 
+    }
     public short DownLastCheck(final Chess[][] ChessStatus, Chess CheckChess) {
         int Row_len = ChessStatus.length, LocX = CheckChess.getNowLocX(), LocY = CheckChess.getNowLocY();
         int CheckPoint = LocY;
