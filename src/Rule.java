@@ -34,8 +34,13 @@ class GoRule extends Rule implements Eatable {
             } else if (BlackColorCounter >= 183 && WhiteColorCounter < 177) {
                 return Const.BLACK_WIN;
             }
+        } else if (WhiteColorCounter > BlackColorCounter - 6) {
+            return Const.WHITE_WIN;
+        } else if (BlackColorCounter > WhiteColorCounter + 6) {
+            return Const.BLACK_WIN;
+        } else {
+            return Const.TIE;
         }
-
         return Const.NO_WIN;
     }
 
