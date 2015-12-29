@@ -41,7 +41,7 @@ class GoRule extends Rule implements Eatable {
         } else {
             return Const.TIE;
         }
-        return Const.NO_WIN;
+        //return Const.NO_WIN;
     }
 
     @Override
