@@ -50,8 +50,8 @@ class Location {
     private Integer x, y;
 
     public Location(Integer x, Integer y) {
-        this.x = new Integer(x);
-        this.y = new Integer(y);
+        this.x = x;
+        this.y = y;
     }
 
     public Location(Location loc) {
@@ -82,6 +82,7 @@ class Location {
     }
 }
 
+// Abstract Factory
 abstract class Factory {
     abstract Object make(Object... obj);
 }
