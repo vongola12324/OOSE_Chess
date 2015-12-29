@@ -36,77 +36,77 @@ class GoRule extends Rule implements Eatable {
             for (j = 0; j < Col_len; j++) {
                 CheckLocX = i;
                 CheckLocY = j;
-                if (Mapping[i][j] != 0) {
+                if (Mapping[i][j] != Const.NO_CHESS) {
 
-                    Stack[i][j][0] = -2;
-                    Stack[i][j][1] = -2;//-2 is start positon Stack[i][j][0] is LocX  Stack[i][j][1] is LocY
-                    HasGone[i][j] = 1;
-                    while (Stack[i][j][0] == -1 && Stack[i][j][1] == -1) {
+                    Stack[i][j][Const.LOCX] = Const.STARTPOS;
+                    Stack[i][j][Const.LOCY] = Const.STARTPOS;//start positon init
+                    HasGone[i][j] = Const.HASGONE;
+                    while (Stack[i][j][Const.LOCX] == Const.NOITEM && Stack[i][j][Const.LOCY] == Const.NOITEM) {
                         Mark = Checker(CheckPoint, Mapping, CheckLocX, CheckLocY);//check
                         if (Mark == 1)//if check Nothing
                             break;
                         //if checked, go next, and stack position
                         //first, search where can go
-                        for (int CheckCanGo = 0; CheckCanGo < 4; CheckCanGo++) {//check where can go
-                            if (CheckCanGo == 0) {
-                                if (CheckPoint[CheckLocX][CheckLocY][CheckCanGo] == 1 && HasGone[CheckLocX][CheckLocY + 1] == 0)
-                                    CanGo[CheckLocX][CheckLocY][CheckCanGo] = 1;
+                        for (int CheckCanGo = Const.UP; CheckCanGo < Const.LEFT; CheckCanGo++) {//check where can go
+                            if (CheckCanGo == Const.UP) {
+                                if (CheckPoint[CheckLocX][CheckLocY][CheckCanGo] == Const.SAME_COLOR && HasGone[CheckLocX][CheckLocY + 1] == Const.HAVENGONE)
+                                    CanGo[CheckLocX][CheckLocY][CheckCanGo] = Const.CANGO;
                             }
-                            if (CheckCanGo == 1) {
-                                if (CheckPoint[CheckLocX][CheckLocY][CheckCanGo] == 1 && HasGone[CheckLocX + 1][CheckLocY] == 0)
-                                    CanGo[CheckLocX][CheckLocY][CheckCanGo] = 1;
+                            if (CheckCanGo == Const.RIGHT) {
+                                if (CheckPoint[CheckLocX][CheckLocY][CheckCanGo] == Const.SAME_COLOR && HasGone[CheckLocX + 1][CheckLocY] == Const.HAVENGONE)
+                                    CanGo[CheckLocX][CheckLocY][CheckCanGo] = Const.CANGO;
                             }
-                            if (CheckCanGo == 2) {
-                                if (CheckPoint[CheckLocX][CheckLocY][CheckCanGo] == 1 && HasGone[CheckLocX][CheckLocY - 1] == 0)
-                                    CanGo[CheckLocX][CheckLocY][CheckCanGo] = 1;
+                            if (CheckCanGo == Const.DOWN) {
+                                if (CheckPoint[CheckLocX][CheckLocY][CheckCanGo] == Const.SAME_COLOR && HasGone[CheckLocX][CheckLocY - 1] == Const.HAVENGONE)
+                                    CanGo[CheckLocX][CheckLocY][CheckCanGo] = Const.CANGO;
                             }
-                            if (CheckCanGo == 3) {
-                                if (CheckPoint[CheckLocX][CheckLocY][CheckCanGo] == 1 && HasGone[CheckLocX - 1][CheckLocY] == 0)
-                                    CanGo[CheckLocX][CheckLocY][CheckCanGo] = 1;
+                            if (CheckCanGo == Const.LEFT) {
+                                if (CheckPoint[CheckLocX][CheckLocY][CheckCanGo] == Const.SAME_COLOR && HasGone[CheckLocX - 1][CheckLocY] == Const.HAVENGONE)
+                                    CanGo[CheckLocX][CheckLocY][CheckCanGo] = Const.CANGO;
                             }
                         }
 
-                        for (int Way_to_go = 0; Way_to_go < 4; Way_to_go++) {//goto next point
-                            if (CheckPoint[CheckLocX][CheckLocY][Way_to_go] == 1) {//if same color
-                                if (Way_to_go == 0) {
+                        for (int Way_to_go = Const.UP; Way_to_go < Const.LEFT; Way_to_go++) {//goto next point
+                            if (CheckPoint[CheckLocX][CheckLocY][Way_to_go] == Const.SAME_COLOR) {//if same color
+                                if (Way_to_go == Const.UP) {
                                     CheckLocY++;//move
-                                    if (HasGone[CheckLocX][CheckLocY] == 0) {// if never gone
-                                        HasGone[CheckLocX][CheckLocY] = 1;//now is gone
-                                        CanGo[CheckLocX][CheckLocY - 1][Way_to_go] = 0;//now cannot go
-                                        CanBeEat[CheckLocX][CheckLocY - 1] = 1;//Mark Eatable Buff
+                                    if (HasGone[CheckLocX][CheckLocY] == Const.HAVENGONE) {// if never gone
+                                        HasGone[CheckLocX][CheckLocY] = Const.HASGONE;//now is gone
+                                        CanGo[CheckLocX][CheckLocY - 1][Way_to_go] = Const.CANNOTGO;//now cannot go
+                                        CanBeEat[CheckLocX][CheckLocY - 1] = Const.CANBEEAT;//Mark Eatable Buff
                                         Stack[CheckLocX][CheckLocY][0] = CheckLocX;//Stack LocX Record
                                         Stack[CheckLocX][CheckLocY][1] = CheckLocY - 1;//Stack LocY Record
                                         break;//don't do others
                                     } else
                                         CheckLocY--;//return move back
-                                } else if (Way_to_go == 1) {
+                                } else if (Way_to_go == Const.RIGHT) {
                                     CheckLocX++;
-                                    if (HasGone[CheckLocX][CheckLocY] == 0) {
-                                        HasGone[CheckLocX][CheckLocY] = 1;
-                                        CanGo[CheckLocX - 1][CheckLocY][Way_to_go] = 0;
-                                        CanBeEat[CheckLocX - 1][CheckLocY] = 1;
+                                    if (HasGone[CheckLocX][CheckLocY] == Const.HAVENGONE) {
+                                        HasGone[CheckLocX][CheckLocY] = Const.HASGONE;
+                                        CanGo[CheckLocX - 1][CheckLocY][Way_to_go] = Const.CANNOTGO;
+                                        CanBeEat[CheckLocX - 1][CheckLocY] = Const.CANBEEAT;
                                         Stack[CheckLocX][CheckLocY][0] = CheckLocX - 1;
                                         Stack[CheckLocX][CheckLocY][1] = CheckLocY;
                                         break;
                                     } else
                                         CheckLocX++;
-                                } else if (Way_to_go == 2) {
+                                } else if (Way_to_go == Const.DOWN) {
                                     CheckLocY--;
-                                    if (HasGone[CheckLocX][CheckLocY] == 0) {
-                                        HasGone[CheckLocX][CheckLocY] = 1;
-                                        CanGo[CheckLocX][CheckLocY + 1][Way_to_go] = 0;
-                                        CanBeEat[CheckLocX][CheckLocY + 1] = 1;
+                                    if (HasGone[CheckLocX][CheckLocY] == Const.HAVENGONE) {
+                                        HasGone[CheckLocX][CheckLocY] = Const.HASGONE;
+                                        CanGo[CheckLocX][CheckLocY + 1][Way_to_go] = Const.CANNOTGO;
+                                        CanBeEat[CheckLocX][CheckLocY + 1] = Const.CANBEEAT;
                                         Stack[CheckLocX][CheckLocY][0] = CheckLocX;
                                         Stack[CheckLocX][CheckLocY][1] = CheckLocY + 1;
                                         break;
                                     } else
                                         CheckLocY++;
-                                } else {
+                                } else {//Const.LEFT
                                     CheckLocX--;
-                                    if (HasGone[CheckLocX][CheckLocY] == 0) {
-                                        HasGone[CheckLocX][CheckLocY] = 1;
-                                        CanGo[CheckLocX + 1][CheckLocY][Way_to_go] = 0;
-                                        CanBeEat[CheckLocX + 1][CheckLocY] = 1;
+                                    if (HasGone[CheckLocX][CheckLocY] == Const.HAVENGONE) {
+                                        HasGone[CheckLocX][CheckLocY] = Const.HASGONE;
+                                        CanGo[CheckLocX + 1][CheckLocY][Way_to_go] = Const.CANNOTGO;
+                                        CanBeEat[CheckLocX + 1][CheckLocY] = Const.CANBEEAT;
                                         Stack[CheckLocX][CheckLocY][0] = CheckLocX + 1;
                                         Stack[CheckLocX][CheckLocY][1] = CheckLocY;
                                         break;
@@ -117,14 +117,25 @@ class GoRule extends Rule implements Eatable {
                         }//first step end
 
                         //Second, if no where to go, back to nearst position which  has CanGo == 1
-                        if (CanGo[CheckLocX][CheckLocY][0] == 0 && CanGo[CheckLocX][CheckLocY][1] == 0
-                                && CanGo[CheckLocX][CheckLocY][2] == 0 && CanGo[CheckLocX][CheckLocY][3] == 0) {
+                        if (CanGo[CheckLocX][CheckLocY][Const.UP] == Const.CANNOTGO && CanGo[CheckLocX][CheckLocY][Const.RIGHT] == Const.CANNOTGO
+                                && CanGo[CheckLocX][CheckLocY][Const.DOWN] == Const.CANNOTGO && CanGo[CheckLocX][CheckLocY][Const.LEFT] == Const.CANNOTGO) {
 
-                            while (CanGo[CheckLocX][CheckLocY][0] == 0 || CanGo[CheckLocX][CheckLocY][1] == 0
-                                    || CanGo[CheckLocX][CheckLocY][2] == 0 || CanGo[CheckLocX][CheckLocY][3] == 0) {
-                                int StackLocX = Stack[CheckLocX][CheckLocY][0], StackLocY = Stack[CheckLocX][CheckLocY][1];
-                                Stack[CheckLocX][CheckLocY][0] = -1;
-                                Stack[CheckLocX][CheckLocY][1] = -1;
+                            while (CanGo[CheckLocX][CheckLocY][Const.UP] == Const.CANNOTGO || CanGo[CheckLocX][CheckLocY][Const.RIGHT] == Const.CANNOTGO
+                                    || CanGo[CheckLocX][CheckLocY][Const.DOWN] == Const.CANNOTGO || CanGo[CheckLocX][CheckLocY][Const.LEFT] == Const.CANNOTGO) {
+                                int StackLocX = Stack[CheckLocX][CheckLocY][Const.LOCX], StackLocY = Stack[CheckLocX][CheckLocY][Const.LOCY];
+                                if (CheckLocX == i && CheckLocY == j) {
+                                    if (CanGo[CheckLocX][CheckLocY][Const.UP] == Const.CANNOTGO && CanGo[CheckLocX][CheckLocY][Const.RIGHT] == Const.CANNOTGO
+                                            && CanGo[CheckLocX][CheckLocY][Const.DOWN] == Const.CANNOTGO && CanGo[CheckLocX][CheckLocY][Const.LEFT] == Const.CANNOTGO) {
+                                        Stack[CheckLocX][CheckLocY][Const.LOCY] = Const.NOITEM;
+                                        Stack[CheckLocX][CheckLocY][Const.LOCY] = Const.NOITEM;
+                                    } else {
+                                        Stack[CheckLocX][CheckLocY][Const.LOCX] = Const.STARTPOS;
+                                        Stack[CheckLocX][CheckLocY][Const.LOCY] = Const.STARTPOS;
+                                    }
+                                } else {
+                                    Stack[CheckLocX][CheckLocY][Const.LOCX] = Const.NOITEM;
+                                    Stack[CheckLocX][CheckLocY][Const.LOCY] = Const.NOITEM;
+                                }
                                 CheckLocX = StackLocX;
                                 CheckLocY = StackLocY;
                             }
@@ -135,7 +146,7 @@ class GoRule extends Rule implements Eatable {
                     } else {// nothing to  eat
                         ArrayIniter(ChessStatus, Mapping, CanBeEat, HasGone, Stack, CheckPoint, CanGo, Row_len, Col_len);//init array
                     }
-                    if (EatAble == true) {//Eating
+                    if (EatAble) {//Eating
                         Eating(ChessStatus, CanBeEat, Row_len, Col_len);
                         ArrayIniter(ChessStatus, Mapping, CanBeEat, HasGone, Stack, CheckPoint, CanGo, Row_len, Col_len);//init array
                         EatAble = false;
@@ -164,18 +175,18 @@ class GoRule extends Rule implements Eatable {
                 } else {
                     Mapping[i][j] = ChessStatus[i][j].color;
                 }
-                HasGone[i][j] = 0;
-                CanBeEat[i][j] = 0;
-                Stack[i][j][0] = -1;
-                Stack[i][j][1] = -1;
-                CanGo[i][j][0] = 0;
-                CanGo[i][j][1] = 0;
-                CanGo[i][j][2] = 0;
-                CanGo[i][j][3] = 0;
-                CheckPoint[i][j][0] = 3;
-                CheckPoint[i][j][1] = 3;
-                CheckPoint[i][j][2] = 3;
-                CheckPoint[i][j][3] = 3;
+                HasGone[i][j] = Const.HAVENGONE;
+                CanBeEat[i][j] = Const.CANNOTEAT;
+                Stack[i][j][Const.LOCX] = Const.NOITEM;
+                Stack[i][j][Const.LOCY] = Const.NOITEM;
+                CanGo[i][j][Const.UP] = Const.CANNOTGO;
+                CanGo[i][j][Const.RIGHT] = Const.CANNOTGO;
+                CanGo[i][j][Const.DOWN] = Const.CANNOTGO;
+                CanGo[i][j][Const.LEFT] = Const.CANNOTGO;
+                CheckPoint[i][j][Const.UP] = Const.INIT;
+                CheckPoint[i][j][Const.RIGHT] = Const.INIT;
+                CheckPoint[i][j][Const.DOWN] = Const.INIT;
+                CheckPoint[i][j][Const.LEFT] = Const.INIT;
             }
         }
     }
@@ -185,43 +196,43 @@ class GoRule extends Rule implements Eatable {
         short Mark = 0;
 
         if (i + 1 > Row_len) {//check if has wall
-            CheckPoint[i][j][1] = 2;
+            CheckPoint[i][j][Const.RIGHT] = Const.DIFF_COLOR;
         } else if (i - 1 < 0) {
-            CheckPoint[i][j][4] = 2;
+            CheckPoint[i][j][Const.LEFT] = Const.DIFF_COLOR;
         } else if (j + 1 > Col_len) {
-            CheckPoint[i][j][0] = 2;
+            CheckPoint[i][j][Const.UP] = Const.DIFF_COLOR;
         } else if (j - 1 < 0) {
-            CheckPoint[i][j][3] = 2;
+            CheckPoint[i][j][Const.DOWN] = Const.DIFF_COLOR;
             /////////////////////////////////////////////////////////////////////////
-        } else if (Mapping[i][j] != Mapping[i][j + 1] && Mapping[i][j + 1] != 0) {//check if Diff Color
-            CheckPoint[i][j][0] = 2;
-        } else if (Mapping[i][j] != Mapping[i + 1][j] && Mapping[i + 1][j] != 0) {
-            CheckPoint[i][j][1] = 2;
-        } else if (Mapping[i][j] != Mapping[i][j - 1] && Mapping[i][j - 1] != 0) {
-            CheckPoint[i][j][2] = 2;
-        } else if (Mapping[i][j] != Mapping[i - 1][j] && Mapping[i - 1][j] != 0) {
-            CheckPoint[i][j][3] = 2;
+        } else if (Mapping[i][j] != Mapping[i][j + 1] && Mapping[i][j + 1] != Const.NO_CHESS) {//check if Diff Color
+            CheckPoint[i][j][Const.UP] = Const.DIFF_COLOR;
+        } else if (Mapping[i][j] != Mapping[i + 1][j] && Mapping[i + 1][j] != Const.NO_CHESS) {
+            CheckPoint[i][j][Const.RIGHT] = Const.DIFF_COLOR;
+        } else if (Mapping[i][j] != Mapping[i][j - 1] && Mapping[i][j - 1] != Const.NO_CHESS) {
+            CheckPoint[i][j][Const.DOWN] = Const.DIFF_COLOR;
+        } else if (Mapping[i][j] != Mapping[i - 1][j] && Mapping[i - 1][j] != Const.NO_CHESS) {
+            CheckPoint[i][j][Const.LEFT] = Const.DIFF_COLOR;
             //////////////////////////////////////////////////////////////////////////
         } else if (Mapping[i][j] == Mapping[i][j + 1]) {//check if Same Color
-            CheckPoint[i][j][0] = 1;
+            CheckPoint[i][j][Const.UP] = Const.SAME_COLOR;
         } else if (Mapping[i][j] != Mapping[i + 1][j]) {
-            CheckPoint[i][j][1] = 1;
+            CheckPoint[i][j][Const.RIGHT] = Const.SAME_COLOR;
         } else if (Mapping[i][j] != Mapping[i][j - 1]) {
-            CheckPoint[i][j][2] = 1;
+            CheckPoint[i][j][Const.DOWN] = Const.SAME_COLOR;
         } else if (Mapping[i][j] != Mapping[i - 1][j]) {
-            CheckPoint[i][j][3] = 1;
+            CheckPoint[i][j][Const.LEFT] = Const.SAME_COLOR;
             ///////////////////////////////////////////////////////////////////////////
-        } else if (Mapping[i][j + 1] == 0) {//check if Nothing here
-            CheckPoint[i][j][0] = 0;
+        } else if (Mapping[i][j + 1] == Const.NO_CHESS) {//check if Nothing here
+            CheckPoint[i][j][Const.UP] = Const.NOTHING;
             Mark = 1;
-        } else if (Mapping[i + 1][j] == 0) {
-            CheckPoint[i][j][1] = 0;
+        } else if (Mapping[i + 1][j] == Const.NO_CHESS) {
+            CheckPoint[i][j][Const.RIGHT] = Const.NOTHING;
             Mark = 1;
-        } else if (Mapping[i][j - 1] == 0) {
-            CheckPoint[i][j][2] = 0;
+        } else if (Mapping[i][j - 1] == Const.NO_CHESS) {
+            CheckPoint[i][j][Const.DOWN] = Const.NOTHING;
             Mark = 1;
-        } else if (Mapping[i - 1][j] == 0) {
-            CheckPoint[i][j][3] = 0;
+        } else if (Mapping[i - 1][j] == Const.NO_CHESS) {
+            CheckPoint[i][j][Const.LEFT] = Const.NOTHING;
             Mark = 1;
             ///////////////////////////////////////////////////////////////////////////
         }
