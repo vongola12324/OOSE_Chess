@@ -117,8 +117,8 @@ class GoRule extends Rule implements Eatable {
                         }//first step end
 
                         //Second, if no where to go, back to nearst position which  has CanGo == 1
-                        if (CanGo[CheckLocX][CheckLocY][0] == 0 || CanGo[CheckLocX][CheckLocY][1] == 0
-                                || CanGo[CheckLocX][CheckLocY][2] == 0 || CanGo[CheckLocX][CheckLocY][3] == 0) {
+                        if (CanGo[CheckLocX][CheckLocY][0] == 0 && CanGo[CheckLocX][CheckLocY][1] == 0
+                                && CanGo[CheckLocX][CheckLocY][2] == 0 && CanGo[CheckLocX][CheckLocY][3] == 0) {
 
                             while (CanGo[CheckLocX][CheckLocY][0] == 0 || CanGo[CheckLocX][CheckLocY][1] == 0
                                     || CanGo[CheckLocX][CheckLocY][2] == 0 || CanGo[CheckLocX][CheckLocY][3] == 0) {
@@ -329,7 +329,7 @@ class GomokuRule extends Rule {
         int Row_len = ChessStatus.length, Col_len = ChessStatus[0].length, LocX = CheckChess.getNowLocX(), LocY = CheckChess.getNowLocY();
         int CheckPointX = LocX, CheckPointY = LocY;
         int CheckResault = 0;
-        while (CheckPointX < Row_len && CheckPointY > Col_len && CheckPointX < LocX + 6 && CheckPointY < LocY + 6 && ChessStatus[CheckPointX][CheckPointY] != null) {
+        while (CheckPointX < Row_len && CheckPointY > 0 && CheckPointX < LocX + 6 && CheckPointY < LocY + 6 && ChessStatus[CheckPointX][CheckPointY] != null) {
             if (CheckChess.color == ChessStatus[CheckPointX][CheckPointY].color) {
                 CheckResault++;
             }
