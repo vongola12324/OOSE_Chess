@@ -43,7 +43,7 @@ public class ChessBoard {
         return winner;
     }
 
-    private short checkFinish() {
+    public short checkFinish() {
         return this.rule.check(ChessStatus);
     }
 
