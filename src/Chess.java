@@ -82,9 +82,17 @@ class Location {
     }
 }
 
-class ChessFactory {
+abstract class Factory {
+    abstract Object make(Object... obj);
+}
+
+class ChessFactory extends Factory {
     public Chess makeChess(short color, Location loc, int step) {
-        return new Chess(color, loc, step);
+        this.make(color, loc, step);
     }
 
+    @Override
+    public Chess make(Object... obj) {
+        return new Chess((Short) obj[0], (Location) obj[1], (Integer) obj[2]);
+    }
 }
