@@ -302,7 +302,7 @@ class GomokuRule extends Rule {
     }
 
     public short DownLastCheck(final Chess[][] ChessStatus, Chess CheckChess) {
-        int Row_len = ChessStatus.length, LocX = CheckChess.getNowLocX(), LocY = CheckChess.getNowLocY();
+        int Row_len = ChessStatus.length, LocX = CheckChess.getLoc().getX(), LocY = CheckChess.getLoc().getY();
         int CheckPoint = LocY;
         int CheckResault = 0;
         while (CheckPoint < Row_len && CheckPoint < LocY + 6 && ChessStatus[LocX][CheckPoint] != null) {
@@ -322,7 +322,7 @@ class GomokuRule extends Rule {
     }
 
     public short LeftLastCheck(final Chess[][] ChessStatus, Chess CheckChess) {
-        int Col_len = ChessStatus[0].length, LocX = CheckChess.getNowLocX(), LocY = CheckChess.getNowLocY();
+        int Col_len = ChessStatus[0].length, LocX = CheckChess.getLoc().getX(), LocY = CheckChess.getLoc().getY();
         int CheckPoint = LocX;
         int CheckResault = 0;
         while (CheckPoint < Col_len && CheckPoint < LocX + 6 && ChessStatus[CheckPoint][LocY] != null) {
@@ -342,7 +342,7 @@ class GomokuRule extends Rule {
     }
 
     public short LeftDownLastCheck(final Chess[][] ChessStatus, Chess CheckChess) {
-        int Row_len = ChessStatus.length, Col_len = ChessStatus[0].length, LocX = CheckChess.getNowLocX(), LocY = CheckChess.getNowLocY();
+        int Row_len = ChessStatus.length, Col_len = ChessStatus[0].length, LocX = CheckChess.getLoc().getX(), LocY = CheckChess.getLoc().getY();
         int CheckPointX = LocX, CheckPointY = LocY;
         int CheckResault = 0;
         while (CheckPointX < Row_len && CheckPointY < Col_len && CheckPointX < LocX + 6 && CheckPointY < LocY + 6 && ChessStatus[CheckPointX][CheckPointY] != null) {
@@ -363,7 +363,7 @@ class GomokuRule extends Rule {
     }
 
     public short LeftUpLastCheck(final Chess[][] ChessStatus, Chess CheckChess) {
-        int Row_len = ChessStatus.length, Col_len = ChessStatus[0].length, LocX = CheckChess.getNowLocX(), LocY = CheckChess.getNowLocY();
+        int Row_len = ChessStatus.length, Col_len = ChessStatus[0].length, LocX = CheckChess.getLoc().getX(), LocY = CheckChess.getLoc().getY();
         int CheckPointX = LocX, CheckPointY = LocY;
         int CheckResault = 0;
         while (CheckPointX < Row_len && CheckPointY > 0 && CheckPointX < LocX + 6 && CheckPointY < LocY + 6 && ChessStatus[CheckPointX][CheckPointY] != null) {
@@ -384,7 +384,7 @@ class GomokuRule extends Rule {
     }
 
     public short TieCheck(final Chess[][] ChessStatus, Chess CheckChess) {
-        int Row_len = ChessStatus.length, Col_len = ChessStatus[0].length, LocX = CheckChess.getNowLocX(), LocY = CheckChess.getNowLocY();
+        int Row_len = ChessStatus.length, Col_len = ChessStatus[0].length, LocX = CheckChess.getLoc().getX(), LocY = CheckChess.getLoc().getY();
         if (Row_len == LocX && Col_len == LocY) {
             return Const.TIE;
         }
