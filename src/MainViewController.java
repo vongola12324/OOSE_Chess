@@ -58,11 +58,16 @@ public class MainViewController implements Initializable {
         setAllActionOfBoardToBlackOrWhite();
 
         New_Game.setOnMouseClicked(event -> restartAndInitial());
+        Surrender.setOnMouseClicked(event -> surrenderGame());
+    }
 
-        Surrender.setOnMouseClicked(event -> {
-            showAlert(chessBoard.checkFinish());
-            restartAndInitial();
-        });
+    void newGame() {
+        restartAndInitial();
+    }
+
+    void surrenderGame() {
+        showAlert(chessBoard.checkFinish());
+        restartAndInitial();
     }
 
     void setAllActionOfBoardToBlackOrWhite() {
@@ -85,8 +90,8 @@ public class MainViewController implements Initializable {
         if (result == Const.NO_WIN) {
             chessBoard.changePlayer();
             targetImage.setOnMouseClicked(null);
-        } else {
-            ifWinThenShowAlertAndRestart(result);
+        } else if (result != Const.NO_WIN) {
+            alertAndRestart(result);
         }
     }
 
@@ -101,11 +106,9 @@ public class MainViewController implements Initializable {
             targetImage.setImage(white);
     }
 
-    void ifWinThenShowAlertAndRestart(short result) {
-        if (result != Const.NO_WIN) {
-            showAlert(result);
-            restartAndInitial();
-        }
+    void alertAndRestart(short result) {
+        showAlert(result);
+        restartAndInitial();
     }
 
     void showAlert(short result) {
