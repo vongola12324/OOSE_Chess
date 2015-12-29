@@ -21,6 +21,8 @@ public class MainViewController implements Initializable {
     GridPane MainView_Board;
     @FXML
     Button New_Game;
+    @FXML
+    Button Surrender;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -56,6 +58,11 @@ public class MainViewController implements Initializable {
         setAllActionOfBoardToBlackOrWhite();
 
         New_Game.setOnMouseClicked(event -> restartAndInitial());
+
+        Surrender.setOnMouseClicked(event -> {
+            showAlert(chessBoard.checkFinish());
+            restartAndInitial();
+        });
     }
 
     void setAllActionOfBoardToBlackOrWhite() {

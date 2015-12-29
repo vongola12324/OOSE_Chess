@@ -50,7 +50,7 @@ public class ChessBoard {
         return Const.NO_WIN;
     }
 
-    private short checkFinish() {
+    public short checkFinish() {
         return this.rule.check(ChessStatus);
     }
 

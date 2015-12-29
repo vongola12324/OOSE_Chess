@@ -7,7 +7,7 @@
 <?import javafx.geometry.*?>
 <?import javafx.scene.layout.*?>
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1130.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="MainViewController">
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1138.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="MainViewController">
    <children>
       <GridPane fx:id="MainView_Board" alignment="CENTER_RIGHT" prefHeight="730.0" prefWidth="730.0">
         <columnConstraints>
@@ -58,7 +58,7 @@
             <Insets />
          </opaqueInsets>
       </GridPane>
-      <Pane layoutX="763.0" prefHeight="240.0" prefWidth="377.0" style="-fx-padding: 10; -fx-border-width: 5; -fx-border-color: #F7CB9A;">
+      <Pane layoutX="753.0" prefHeight="240.0" prefWidth="377.0">
          <children>
             <Label layoutX="97.0" layoutY="14.0" text="Player 1 (Black)">
                <font>
@@ -74,7 +74,7 @@
             </TextField>
          </children>
       </Pane>
-      <Pane layoutX="763.0" layoutY="490.0" prefHeight="240.0" prefWidth="377.0" style="-fx-border-width: 5; -fx-border-color: #F7CB9A;">
+      <Pane layoutX="753.0" layoutY="491.0" prefHeight="240.0" prefWidth="377.0">
          <children>
             <Label layoutX="93.0" layoutY="14.0" text="Player 2 (White)">
                <font>
@@ -90,7 +90,7 @@
             </TextField>
          </children>
       </Pane>
-      <Pane layoutX="763.0" layoutY="235.0" prefHeight="260.0" prefWidth="377.0" style="-fx-border-width: 5; -fx-border-color: #F7CB9A;">
+      <Pane layoutX="753.0" layoutY="245.0" prefHeight="240.0" prefWidth="377.0">
         <children>
             <Label layoutX="126.0" layoutY="14.0" text="遊戲選項">
                <font>
@@ -117,7 +117,7 @@
                   <Font size="15.0" />
                </font>
             </Button>
-             <Button fx:id="ToLose" layoutX="115.0" layoutY="120.0" mnemonicParsing="false" prefHeight="34.0" prefWidth="120.0" text="Surrender">
+             <Button fx:id="Surrender" layoutX="115.0" layoutY="120.0" mnemonicParsing="false" prefHeight="34.0" prefWidth="120.0" text="Surrender">
                  <font>
                      <Font size="15.0" />
                  </font>
