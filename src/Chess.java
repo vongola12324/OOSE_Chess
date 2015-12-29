@@ -1,11 +1,7 @@
-
-public class Chess {
+public abstract class Chess{
     private Location loc;
-    private short color;
-    private Integer step;
 
-    public Chess(short color, Location loc, int step) {
-        this.setColor(color);
+    public Chess(Location loc) {
         this.setLoc(loc);
     }
 
@@ -24,6 +20,18 @@ public class Chess {
 
     public int getNowLocY() {
         return this.loc.getY();
+    }
+
+}
+
+class BWChess extends Chess{
+    private short color;
+    private Integer step;
+
+    public BWChess(short color, Location loc, int step) {
+        super(loc);
+        this.setColor(color);
+        this.setLoc(loc);
     }
 
     public void setColor(short color) {
@@ -92,6 +100,6 @@ class ChessFactory extends Factory {
 
     @Override
     public Chess make(Object... obj) {
-        return new Chess((Short) obj[0], (Location) obj[1], (Integer) obj[2]);
+        return new BWChess((Short) obj[0], (Location) obj[1], (Integer) obj[2]);
     }
 }

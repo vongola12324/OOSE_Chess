@@ -9,7 +9,7 @@ public class Record {
     private JSONArray a;
     private Map m;
 
-    public void saveRecord(String filename, String Winner, String Loser, short WinChess, Chess[][] ChessStatus){
+    public void saveRecord(String filename, String Winner, String Loser, short WinChess, BWChess[][] ChessStatus){
         j = new JSONObject();
         // Info
         j.put("Winner", Winner);

@@ -1,19 +1,18 @@
-import com.sun.rowset.internal.Row;
 
 abstract class Rule {
-    public abstract short check(Chess[][] ChessStatus);
-    public abstract short toLose(Chess[][] ChessStatus);
+    public abstract short check(BWChess[][] ChessStatus);
+    public abstract short toLose(BWChess[][] ChessStatus);
 
 }
 
 interface Eatable {
-    public void eat(Chess[][] ChessStatus);
+    public void eat(BWChess[][] ChessStatus);
 }
 
 class GoRule extends Rule implements Eatable {
 
     @Override
-    public short check(final Chess[][] ChessStatus) {
+    public short check(final BWChess[][] ChessStatus) {
         // TODO: GO/FinishCheck
         int Row_len = ChessStatus.length, Col_len = ChessStatus[0].length;
         int WhiteColorCounter = 0, BlackColorCounter = 0;
@@ -46,12 +45,12 @@ class GoRule extends Rule implements Eatable {
     }
 
     @Override
-    public short toLose(Chess[][] ChessStatus) {
+    public short toLose(BWChess[][] ChessStatus) {
         return check(ChessStatus);
     }
 
     @Override
-    public void eat(Chess[][] ChessStatus) {
+    public void eat(BWChess[][] ChessStatus) {
         // TODO: Eat Dot
         int Row_len = ChessStatus.length, Col_len = ChessStatus[0].length, i, j, CheckLocX, CheckLocY, Mark = 0;
         int[][] Mapping = new int[Row_len][Col_len], CanBeEat = new int[Row_len][Col_len], HasGone = new int[Row_len][Col_len];
@@ -189,7 +188,7 @@ class GoRule extends Rule implements Eatable {
 
     }
 
-    public static void Eating(Chess[][] ChessStatus, int[][] CanBeEat, int Row_len, int Col_len) {
+    public static void Eating(BWChess[][] ChessStatus, int[][] CanBeEat, int Row_len, int Col_len) {
         for (int i = 0; i < Row_len; i++) {
             for (int j = 0; j < Col_len; j++) {
                 if (CanBeEat[i][j] == 1) {
@@ -199,7 +198,7 @@ class GoRule extends Rule implements Eatable {
         }
     }
 
-    public static void ArrayIniter(Chess[][] ChessStatus, int[][] Mapping, int[][] CanBeEat, int[][] HasGone, int[][][] Stack, int[][][] CheckPoint, int[][][] CanGo, int Row_len, int Col_len) {
+    public static void ArrayIniter(BWChess[][] ChessStatus, int[][] Mapping, int[][] CanBeEat, int[][] HasGone, int[][][] Stack, int[][][] CheckPoint, int[][][] CanGo, int Row_len, int Col_len) {
         for (int i = 0; i < Row_len; i++) {
             for (int j = 0; j < Col_len; j++) {
                 if (ChessStatus[i][j] == null) {
@@ -275,10 +274,10 @@ class GoRule extends Rule implements Eatable {
 class GomokuRule extends Rule {
     // Fixme: Change to short and return who win
     @Override
-    public short check(final Chess[][] ChessStatus) {
+    public short check(final BWChess[][] ChessStatus) {
         int Row_len = ChessStatus.length, Col_len = ChessStatus[0].length, i, j;
         short CheckResault = Const.NO_WIN;
-        Chess CheckChess;
+        BWChess CheckChess;
         for (i = 0; i < Row_len; i++) {
             for (j = 0; j < Col_len; j++) {
                 CheckChess = ChessStatus[i][j];
@@ -306,7 +305,7 @@ class GomokuRule extends Rule {
         }
         return Const.NO_WIN;
     }
-    public short toLose(final Chess[][] ChessStatus){
+    public short toLose(final BWChess[][] ChessStatus){
         int Row_len = ChessStatus.length, Col_len = ChessStatus[0].length;
         int WhiteCCounter = 0, BlackCCounter = 0;
         BlackCCounter --;
@@ -331,7 +330,7 @@ class GomokuRule extends Rule {
         }
 
     }
-    public short DownLastCheck(final Chess[][] ChessStatus, Chess CheckChess) {
+    public short DownLastCheck(final BWChess[][] ChessStatus, BWChess CheckChess) {
         int Row_len = ChessStatus.length, LocX = CheckChess.getLoc().getX(), LocY = CheckChess.getLoc().getY();
         int CheckPoint = LocY;
         int CheckResault = 0;
@@ -351,7 +350,7 @@ class GomokuRule extends Rule {
         return Const.NO_WIN;
     }
 
-    public short LeftLastCheck(final Chess[][] ChessStatus, Chess CheckChess) {
+    public short LeftLastCheck(final BWChess[][] ChessStatus, BWChess CheckChess) {
         int Col_len = ChessStatus[0].length, LocX = CheckChess.getLoc().getX(), LocY = CheckChess.getLoc().getY();
         int CheckPoint = LocX;
         int CheckResault = 0;
@@ -371,7 +370,7 @@ class GomokuRule extends Rule {
         return Const.NO_WIN;
     }
 
-    public short LeftDownLastCheck(final Chess[][] ChessStatus, Chess CheckChess) {
+    public short LeftDownLastCheck(final BWChess[][] ChessStatus, BWChess CheckChess) {
         int Row_len = ChessStatus.length, Col_len = ChessStatus[0].length, LocX = CheckChess.getLoc().getX(), LocY = CheckChess.getLoc().getY();
         int CheckPointX = LocX, CheckPointY = LocY;
         int CheckResault = 0;
@@ -392,7 +391,7 @@ class GomokuRule extends Rule {
         return Const.NO_WIN;
     }
 
-    public short LeftUpLastCheck(final Chess[][] ChessStatus, Chess CheckChess) {
+    public short LeftUpLastCheck(final BWChess[][] ChessStatus, BWChess CheckChess) {
         int Row_len = ChessStatus.length, Col_len = ChessStatus[0].length, LocX = CheckChess.getLoc().getX(), LocY = CheckChess.getLoc().getY();
         int CheckPointX = LocX, CheckPointY = LocY;
         int CheckResault = 0;
@@ -413,7 +412,7 @@ class GomokuRule extends Rule {
         return Const.NO_WIN;
     }
 
-    public short TieCheck(final Chess[][] ChessStatus, Chess CheckChess) {
+    public short TieCheck(final BWChess[][] ChessStatus, BWChess CheckChess) {
         int Row_len = ChessStatus.length, Col_len = ChessStatus[0].length, LocX = CheckChess.getLoc().getX(), LocY = CheckChess.getLoc().getY();
         if (Row_len == LocX && Col_len == LocY) {
             return Const.TIE;
