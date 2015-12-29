@@ -11,7 +11,6 @@ import java.util.ResourceBundle;
 
 public class MainViewController implements Initializable {
     private myImageView[][] board = new myImageView[20][20];
-    private myImageView nowLocationImage;
     private Image black = new Image("image/black.jpg");
     private Image white = new Image("image/white.jpg");
 
@@ -22,6 +21,8 @@ public class MainViewController implements Initializable {
     GridPane MainView_Board;
     @FXML
     Button New_Game;
+    @FXML
+    Button Surrender;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -57,6 +58,11 @@ public class MainViewController implements Initializable {
         setAllActionOfBoardToBlackOrWhite();
 
         New_Game.setOnMouseClicked(event -> restartAndInitial());
+
+        Surrender.setOnMouseClicked(event -> {
+            showAlert(chessBoard.checkFinish());
+            restartAndInitial();
+        });
     }
 
     void setAllActionOfBoardToBlackOrWhite() {

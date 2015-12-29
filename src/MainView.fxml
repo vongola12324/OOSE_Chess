@@ -117,7 +117,7 @@
                   <Font size="15.0" />
                </font>
             </Button>
-             <Button fx:id="ToLose" layoutX="115.0" layoutY="120.0" mnemonicParsing="false" prefHeight="34.0" prefWidth="120.0" text="Surrender">
+             <Button fx:id="Surrender" layoutX="115.0" layoutY="120.0" mnemonicParsing="false" prefHeight="34.0" prefWidth="120.0" text="Surrender">
                  <font>
                      <Font size="15.0" />
                  </font>
