@@ -37,17 +37,10 @@ public class ChessBoard {
         short winner = this.checkFinish();
 
         if (winner == Const.NO_WIN) {
-            return Const.NO_WIN;
-        } else if (winner == Const.TIE) {
-            return Const.TIE;
-        } else if (winner == Const.BLACK_WIN) {
+            this.changePlayer();
             step++;
-            return Const.BLACK_WIN;
-        } else if (winner == Const.WHITE_WIN) {
-            step++;
-            return Const.WHITE_WIN;
         }
-        return Const.NO_WIN;
+        return winner;
     }
 
     private short checkFinish() {
@@ -64,5 +57,10 @@ public class ChessBoard {
 
     public short getNowPlayer() {
         return nowPlayer;
+    }
+
+    public void Surrender() {
+        // TODO: Show Winner (UI)
+        System.out.println("Winner: " + (this.nowPlayer == Const.BLACK_CHESS ? "BLACK" : "WHITE"));
     }
 }
