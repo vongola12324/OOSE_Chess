@@ -41,7 +41,8 @@ public class ChessBoard {
         // Generate Record
         this.gameRecord.addRecord(this.ChessStatus[loc.getX()][loc.getY()]);
         // DEBUG
-        System.out.println(this.gameRecord.lastRecord());
+        if (Const.DEBUG)
+            System.out.println(this.gameRecord.lastRecord());
 
         // Check Finish
         return this.checkFinish();
@@ -68,6 +69,13 @@ public class ChessBoard {
     }
 
     public void setRule(Rule rule) {
+        if (Const.DEBUG) {
+            if (rule instanceof GomokuRule)
+                System.out.println("Now playing Gomoku");
+            else
+                System.out.println("Now playing Go");
+        }
+
         this.rule = rule;
     }
 }

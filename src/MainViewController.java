@@ -54,7 +54,7 @@ public class MainViewController implements Initializable {
     }
 
     void initializeBoardImage() {
-        chessBoard = new ChessBoard(new GoRule());
+        chessBoard = new ChessBoard(new GomokuRule());
         for (int i = 0; i < 20; i++) {
             for (int i2 = 0; i2 < 20; i2++) {
                 board[i][i2] = new myImageView("image/board.jpg");
@@ -72,7 +72,7 @@ public class MainViewController implements Initializable {
         New_Game.setOnMouseClicked(event -> newGame());
         Surrender.setOnMouseClicked(event -> surrenderGame());
         ruleGroup.selectedToggleProperty().addListener((observable, oldValue, newValue) -> {
-            changeGmaeMode();
+            changeGameMode();
         });
     }
 
@@ -85,7 +85,7 @@ public class MainViewController implements Initializable {
         restartAndInitial();
     }
 
-    void changeGmaeMode() {
+    void changeGameMode() {
         if(ruleGroup.getSelectedToggle() == Rule_Five) {
             chessBoard.setRule(new GomokuRule());
         } else if(ruleGroup.getSelectedToggle() == Rule_Weichi) {
