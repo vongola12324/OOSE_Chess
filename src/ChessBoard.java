@@ -44,11 +44,11 @@ public class ChessBoard {
     }
 
     public short checkFinish() {
-        return this.rule.check((BWChess[][])ChessStatus);
+        return this.rule.check((BWChess[][]) ChessStatus);
     }
 
     public short checkToLose() {
-        return this.rule.toLose((BWChess[][])ChessStatus);
+        return this.rule.toLose(nowPlayer);
     }
 
     public void changePlayer() {
@@ -63,8 +63,7 @@ public class ChessBoard {
         return nowPlayer;
     }
 
-    @Deprecated
-    public void Surrender() {
-        System.out.println("Winner: " + (this.nowPlayer == Const.BLACK_CHESS ? "BLACK" : "WHITE"));
+    public void setRule(Rule rule) {
+        this.rule = rule;
     }
 }

@@ -1,4 +1,8 @@
 public class Const{
+    //Image Parameter
+    static short IMAGE_HEIGHT = 37;
+    static short IMAGE_WIDTH = 38;
+
     // Chess Color
     static short NO_CHESS = -1;
     static short BLACK_CHESS = 0;

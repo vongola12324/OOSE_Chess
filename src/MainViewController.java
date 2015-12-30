@@ -1,7 +1,8 @@
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
+import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
@@ -11,8 +12,9 @@ import java.util.ResourceBundle;
 
 public class MainViewController implements Initializable {
     private myImageView[][] board = new myImageView[20][20];
-    private Image black = new Image("image/black.jpg");
-    private Image white = new Image("image/white.jpg");
+    private final Image black = new Image("image/black.jpg");
+    private final Image white = new Image("image/white.jpg");
+    private final ToggleGroup ruleGroup = new ToggleGroup();
 
     private ChessBoard chessBoard;
     private final Alert alert = new Alert(Alert.AlertType.INFORMATION);
@@ -23,10 +25,15 @@ public class MainViewController implements Initializable {
     Button New_Game;
     @FXML
     Button Surrender;
+    @FXML
+    RadioButton Rule_Five;
+    @FXML
+    RadioButton Rule_Weichi;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         initializeBoardImage();
+        initializeRadioButton();
         setAllActionListener();
         initialAlert();
     }
@@ -34,6 +41,11 @@ public class MainViewController implements Initializable {
     void initialAlert() {
         alert.setTitle("Win!");
         alert.setContentText("Click Yes to restart the game.");
+    }
+
+    void initializeRadioButton() {
+        Rule_Five.setToggleGroup(ruleGroup);
+        Rule_Weichi.setToggleGroup(ruleGroup);
     }
 
     void restartAndInitial() {
@@ -46,8 +58,8 @@ public class MainViewController implements Initializable {
         for (int i = 0; i < 20; i++) {
             for (int i2 = 0; i2 < 20; i2++) {
                 board[i][i2] = new myImageView("image/board.jpg");
-                board[i][i2].setFitHeight(37);
-                board[i][i2].setFitWidth(38);
+                board[i][i2].setFitHeight(Const.IMAGE_HEIGHT);
+                board[i][i2].setFitWidth(Const.IMAGE_WIDTH);
                 board[i][i2].setLoc(i, i2);
                 MainView_Board.add(board[i][i2], i, i2);
             }
@@ -57,8 +69,11 @@ public class MainViewController implements Initializable {
     void setAllActionListener() {
         setAllActionOfBoardToBlackOrWhite();
 
-        New_Game.setOnMouseClicked(event -> restartAndInitial());
+        New_Game.setOnMouseClicked(event -> newGame());
         Surrender.setOnMouseClicked(event -> surrenderGame());
+        ruleGroup.selectedToggleProperty().addListener((observable, oldValue, newValue) -> {
+            changeGmaeMode();
+        });
     }
 
     void newGame() {
@@ -66,8 +81,16 @@ public class MainViewController implements Initializable {
     }
 
     void surrenderGame() {
-        showAlert(chessBoard.checkFinish());
+        showAlert(chessBoard.checkToLose());
         restartAndInitial();
+    }
+
+    void changeGmaeMode() {
+        if(ruleGroup.getSelectedToggle() == Rule_Five) {
+            chessBoard.setRule(new GomokuRule());
+        } else if(ruleGroup.getSelectedToggle() == Rule_Weichi) {
+            chessBoard.setRule(new GoRule());
+        }
     }
 
     void setAllActionOfBoardToBlackOrWhite() {
@@ -125,18 +148,17 @@ public class MainViewController implements Initializable {
             alert.setHeaderText("TIE!");
         }
     }
-}
 
+    void setRule(short rule) {
+
+    }
+}
 
 class myImageView extends ImageView {
     private Location loc;
 
     myImageView(String imagePath) {
         super(imagePath);
-    }
-
-    public void setLoc(Location loc) {
-        this.loc = loc;
     }
 
     public void setLoc(int x, int y) {

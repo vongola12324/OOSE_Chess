@@ -1,8 +1,9 @@
 
 abstract class Rule {
     public abstract short check(BWChess[][] ChessStatus);
-    public abstract short toLose(BWChess[][] ChessStatus);
 
+    public short toLose(BWChess[][] ChessStatus) { return Const.NO_WIN; };
+    public short toLose(short nowPlayer) { return Const.NO_WIN; };
 }
 
 interface Eatable {
@@ -305,31 +306,15 @@ class GomokuRule extends Rule {
         }
         return Const.NO_WIN;
     }
-    public short toLose(final BWChess[][] ChessStatus){
-        int Row_len = ChessStatus.length, Col_len = ChessStatus[0].length;
-        int WhiteCCounter = 0, BlackCCounter = 0;
-        BlackCCounter --;
-        for (int i = 0; i < Row_len; i++) {
-            for (int j = 0; j < Col_len; j++) {
-                if (ChessStatus[i][j] != null) {
-                    short nowColor = ChessStatus[i][j].getColor();
-                    if (nowColor == Const.WHITE_CHESS) {
-                        WhiteCCounter++;
-                    } else if(nowColor == Const.BLACK_CHESS){
-                        BlackCCounter++;
-                    }
-                }
-            }
-        }
-        if(WhiteCCounter > BlackCCounter){
-            return Const.WHITE_WIN;
-        }else if(BlackCCounter > WhiteCCounter){
-            return Const.BLACK_WIN;
-        }else{
-            return Const.TIE;
-        }
 
+    public short toLose(final short nowPlayer) {
+        if(nowPlayer == Const.BLACK_CHESS ) {
+            return Const.WHITE_WIN;
+        } else {
+            return Const.BLACK_WIN;
+        }
     }
+
     public short DownLastCheck(final BWChess[][] ChessStatus, BWChess CheckChess) {
         int Row_len = ChessStatus.length, LocX = CheckChess.getLoc().getX(), LocY = CheckChess.getLoc().getY();
         int CheckPoint = LocY;
