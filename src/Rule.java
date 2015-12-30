@@ -76,6 +76,7 @@ class GoRule extends Rule implements Eatable {
         }
     }
 
+    // FIXME: Need to return Change List (ArrayList)
     public void Eating(BWChess[][] ChessStatus) {
         for (int t = 0; t < BlockLen; t++) {
             int i = Block[t] / 100;

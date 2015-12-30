@@ -112,6 +112,7 @@ public class MainViewController implements Initializable {
 
     void checkAndUpdateUI(myImageView targetImage) {
         short result = chessBoard.clickDot(targetImage.getLoc());
+        // FIXME: Need to return ChangeList and update UI
         updateUI(targetImage);
         if (result == Const.NO_WIN) {
             chessBoard.changePlayer();
