@@ -34,18 +34,21 @@ public class ChessBoard {
         }
     }
 
-    public short clickDot(Location loc) {
-        // Make Chess
-        this.ChessStatus[loc.getX()][loc.getY()] = ((BWChessFactory) factory).makeChess(this.nowPlayer, loc);
+    public boolean clickDot(Location loc) {
 
-        // Generate Record
-        this.gameRecord.addRecord(this.ChessStatus[loc.getX()][loc.getY()]);
-        // DEBUG
-        if (Const.DEBUG)
-            System.out.println(this.gameRecord.lastRecord());
+        if (this.ChessStatus[loc.getX()][loc.getY()] != null) {
+            // Make Chess
+            this.ChessStatus[loc.getX()][loc.getY()] = ((BWChessFactory) factory).makeChess(this.nowPlayer, loc);
 
-        // Check Finish
-        return this.checkFinish();
+            // Generate Record
+            this.gameRecord.addRecord(this.ChessStatus[loc.getX()][loc.getY()]);
+            // DEBUG
+            if (Const.DEBUG)
+                System.out.println(this.gameRecord.lastRecord());
+            return true;
+        } else {
+            return false;
+        }
     }
 
     public short checkFinish() {
@@ -77,5 +80,9 @@ public class ChessBoard {
         }
 
         this.rule = rule;
+    }
+
+    public Rule getRule() {
+        return this.rule;
     }
 }

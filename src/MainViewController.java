@@ -8,6 +8,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
 
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.ResourceBundle;
 
 public class MainViewController implements Initializable {
@@ -111,14 +112,17 @@ public class MainViewController implements Initializable {
     }
 
     void checkAndUpdateUI(myImageView targetImage) {
-        short result = chessBoard.clickDot(targetImage.getLoc());
-        // FIXME: Need to return ChangeList and update UI
-        updateUI(targetImage);
-        if (result == Const.NO_WIN) {
-            chessBoard.changePlayer();
-            targetImage.setOnMouseClicked(null);
-        } else if (result != Const.NO_WIN) {
-            alertAndRestart(result);
+        if (chessBoard.clickDot(targetImage.getLoc())) {
+            ArrayList<Location>=chessBoard.getRule().eat();
+            short result = chessBoard.checkFinish();
+            // FIXME: Need to return ChangeList and update UI
+            updateUI(targetImage);
+            if (result == Const.NO_WIN) {
+                chessBoard.changePlayer();
+                targetImage.setOnMouseClicked(null);
+            } else if (result != Const.NO_WIN) {
+                alertAndRestart(result);
+            }
         }
     }
 
