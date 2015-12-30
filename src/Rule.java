@@ -3,7 +3,10 @@ abstract class Rule {
     public abstract short check(BWChess[][] ChessStatus);
 
     public short toLose(short nowPlayer) {
-        return nowPlayer;
+        if(nowPlayer == Const.BLACK_CHESS)
+            return Const.BLACK_WIN;
+        else
+            return Const.WHITE_WIN;
     }
 }
 
