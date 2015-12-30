@@ -69,7 +69,8 @@ class GoRule extends Rule implements Eatable {
                     }
                     //System.out.println("eat" + i + " " + j);
                     Eating(ChessStatus);
-
+                    ArrayIniter(ChessStatus);
+                    System.out.println("next");
                 }
             }
         }

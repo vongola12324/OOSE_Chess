@@ -87,11 +87,13 @@ public class MainViewController implements Initializable {
 
     void changeGameMode() {
         if(ruleGroup.getSelectedToggle() == Rule_Five) {
+            restartAndInitial();
             chessBoard.setRule(new GomokuRule());
         } else if(ruleGroup.getSelectedToggle() == Rule_Weichi) {
+            restartAndInitial();
             chessBoard.setRule(new GoRule());
         }
-        restartAndInitial();
+
     }
 
     void setAllActionOfBoardToBlackOrWhite() {
