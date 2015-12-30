@@ -64,10 +64,10 @@ class GoRule extends Rule implements Eatable {
                     Checker(i, j);
                     //System.out.println(i + " " + j);
                     if (checkNoChess()) {
-                        System.out.println(checkNoChess());
+                        //System.out.println(checkNoChess());
                         continue;
                     }
-                    System.out.println("eat" + i + " " + j);
+                    //System.out.println("eat" + i + " " + j);
                     Eating(ChessStatus);
 
                 }
@@ -79,7 +79,7 @@ class GoRule extends Rule implements Eatable {
         for (int t = 0; t < BlockLen; t++) {
             int i = Block[t] / 100;
             int j = Block[t] % 100;
-            System.out.println(i + " " + j + "eating");
+            System.out.println("Kill: "+(j+1) + " " + (i+1));
             ChessStatus[i][j] = null;
         }
 
@@ -130,14 +130,14 @@ class GoRule extends Rule implements Eatable {
         for (int t = 0; t < BlockLen; t++) {
             i = Block[t] / 100;
             j = Block[t] % 100;
-            System.out.println("Check" + i + " " + j);
-            System.out.println("return this 1");
+            //System.out.println("Check" + i + " " + j);
+            //System.out.println("return this 1");
             if (i - 1 >= 0 && Mapping[i - 1][j] == Const.NO_CHESS) return true;
-            System.out.println("return this 2");
+            //System.out.println("return this 2");
             if (i + 1 < 19 && Mapping[i + 1][j] == Const.NO_CHESS) return true;
-            System.out.println("return this 3");
+            //System.out.println("return this 3");
             if (j - 1 >= 0 && Mapping[i][j - 1] == Const.NO_CHESS) return true;
-            System.out.println("return this 4");
+            //System.out.println("return this 4");
             if (j + 1 < 19 && Mapping[i][j + 1] == Const.NO_CHESS) return true;
         }
         return false;
