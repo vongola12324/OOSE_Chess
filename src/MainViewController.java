@@ -91,6 +91,7 @@ public class MainViewController implements Initializable {
         } else if(ruleGroup.getSelectedToggle() == Rule_Weichi) {
             chessBoard.setRule(new GoRule());
         }
+        restartAndInitial();
     }
 
     void setAllActionOfBoardToBlackOrWhite() {
