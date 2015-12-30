@@ -2,56 +2,53 @@ import org.json.*;
 
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.Map;
 
 public class Record {
-    private JSONObject j;
-    private JSONArray a;
-    private Map m;
+    private String blackChess;
+    private String whiteChess;
+    private ArrayList<Chess> chessHistory;
 
-    public void saveRecord(String filename, String Winner, String Loser, short WinChess, BWChess[][] ChessStatus){
-        j = new JSONObject();
-        // Info
-        j.put("Winner", Winner);
-        j.put("Loser", Loser);
-        j.put("WinChess", WinChess);
-
-        // Chess
-        a = new JSONArray();
-        JSONArray ChessArray = new JSONArray();
-        JSONObject Chess = new JSONObject();
-        for(int i=0;i<ChessStatus.length;i++){
-            for(int j=0;j<ChessStatus.length;j++){
-                if (ChessStatus[i][j] != null){
-                    Chess.put("Color", ChessStatus[i][j].getColor());
-                    JSONObject ChessLoc = new JSONObject();
-                    ChessLoc.put("x", ChessStatus[i][j].getLoc().getX());
-                    ChessLoc.put("y", ChessStatus[i][j].getLoc().getY());
-                    Chess.put("Location", ChessLoc);
-                    Chess.put("Step", ChessStatus[i][j].getStep());
-                    ChessArray.put(Chess);
-                }
-            }
-            if (ChessArray.length() != 0){
-                a.put(ChessArray);
-            }
-        }
-        j.put("ChessStatus", a);
-
-        // Save to file
-        JSONWriter writer = null;
-        try {
-            writer = new JSONWriter(new FileWriter(filename));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        if (writer!=null){
-            writer.value(j);
-            writer.endObject();
-        }
+    public Record(String blackChessPlayer, String whiteChessPlayer) {
+        this.blackChess = blackChessPlayer;
+        this.whiteChess = whiteChessPlayer;
+        this.chessHistory = new ArrayList<>();
     }
 
-    public Object readRecord(String filename){
-        return new Object();
+    public void addRecord(Chess chess) {
+        this.chessHistory.add(chess);
     }
+
+    public void push(Chess chess) {
+        this.addRecord(chess);
+    }
+
+    public Chess lastRecord() {
+        return new BWChess(this.chessHistory.get(this.chessHistory.size() - 1));
+    }
+
+    public Chess top() {
+        return this.lastRecord();
+    }
+
+    public void removeRecord() {
+        this.chessHistory.remove(this.lastRecord());
+    }
+
+    public void pop() {
+        this.removeRecord();
+    }
+
+    public void saveRecord() {
+        // TODO: Save to file or DB
+    }
+
+    public void loadRecord() {
+        // TODO: Load from file or DB
+    }
+
+
+
 }
