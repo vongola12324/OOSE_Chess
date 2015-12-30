@@ -97,7 +97,7 @@
                   <Font size="26.0" />
                </font>
             </Label>
-            <RadioButton fx:id="Rule_five" layoutX="101.0" layoutY="192.0" mnemonicParsing="false" prefHeight="34.0" prefWidth="120.0" text="五子棋">
+            <RadioButton fx:id="Rule_Five" layoutX="101.0" layoutY="192.0" mnemonicParsing="false" prefHeight="34.0" prefWidth="120.0" selected="true" text="五子棋">
                <font>
                   <Font size="15.0" />
                </font>
