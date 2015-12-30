@@ -33,7 +33,7 @@ class BWChess extends Chess{
     @Deprecated
     private Integer step;
 
-    public BWChess(short color, Location loc, int step) {
+    public BWChess(short color, Location loc) {
         super(loc);
         this.setColor(color);
         this.setLoc(loc);
@@ -64,6 +64,10 @@ class BWChess extends Chess{
         return this.step;
     }
 
+    @Override
+    public String toString() {
+        return "BWChess: " + (this.getColor() == Const.BLACK_CHESS ? "Black Chess" : "White Chess") + " at " + this.getLoc();
+    }
 }
 
 class Location {
@@ -107,13 +111,13 @@ abstract class Factory {
     abstract Object make(Object... obj);
 }
 
-class ChessFactory extends Factory {
-    public Chess makeChess(short color, Location loc, int step) {
-        return this.make(color, loc, step);
+class BWChessFactory extends Factory {
+    public Chess makeChess(short color, Location loc) {
+        return this.make(color, loc);
     }
 
     @Override
     public Chess make(Object... obj) {
-        return new BWChess((Short) obj[0], (Location) obj[1], (Integer) obj[2]);
+        return new BWChess((Short) obj[0], (Location) obj[1]);
     }
 }

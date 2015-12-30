@@ -1,10 +1,14 @@
 public class ChessBoard {
-    ChessFactory factory = new ChessFactory();
+    Factory factory = new BWChessFactory();
 
     private Chess ChessStatus[][] = new BWChess[20][20];
     private short nowPlayer;
-    private int step;
+
+    // What game to play
     private Rule rule;
+
+    // Record all chess
+    private Record gameRecord;
 
     public ChessBoard(Rule rule) {
         initializeGame();
@@ -14,11 +18,12 @@ public class ChessBoard {
     }
 
     private void initializeGame() {
-        // First step = 0
-        this.step = 0;
-
         // Black Chess First
         this.nowPlayer = Const.BLACK_CHESS;
+
+        // Generate record
+        // FIXME: getname from UI
+        this.gameRecord = new Record("BLACK", "WHITE");
     }
 
     private void initializeChessBoard() {
@@ -31,16 +36,15 @@ public class ChessBoard {
 
     public short clickDot(Location loc) {
         // Make Chess
-        this.ChessStatus[loc.getX()][loc.getY()] = factory.makeChess(this.nowPlayer, loc, this.step);
+        this.ChessStatus[loc.getX()][loc.getY()] = ((BWChessFactory) factory).makeChess(this.nowPlayer, loc);
+
+        // Generate Record
+        this.gameRecord.addRecord(this.ChessStatus[loc.getX()][loc.getY()]);
+        // DEBUG
+        System.out.println(this.gameRecord.lastRecord());
 
         // Check Finish
-        short winner = this.checkFinish();
-
-        if (winner == Const.NO_WIN) {
-            //this.changePlayer();
-            step++;
-        }
-        return winner;
+        return this.checkFinish();
     }
 
     public short checkFinish() {
