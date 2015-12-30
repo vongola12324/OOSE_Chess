@@ -54,7 +54,7 @@ public class MainViewController implements Initializable {
     }
 
     void initializeBoardImage() {
-        chessBoard = new ChessBoard(new GomokuRule());
+        chessBoard = new ChessBoard(new GoRule());
         for (int i = 0; i < 20; i++) {
             for (int i2 = 0; i2 < 20; i2++) {
                 board[i][i2] = new myImageView("image/board.jpg");
