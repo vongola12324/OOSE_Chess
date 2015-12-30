@@ -5,11 +5,14 @@ public abstract class Chess{
         this.setLoc(loc);
     }
 
+    public Chess(Chess c) {
+        this.setLoc(c.getLoc());
+    }
+
     public void setLoc(Location loc) {
         this.loc = new Location(loc);
     }
 
-    @Deprecated
     public Location getLoc() {
         return new Location(this.loc);
     }
@@ -26,12 +29,21 @@ public abstract class Chess{
 
 class BWChess extends Chess{
     private short color;
+
+    @Deprecated
     private Integer step;
 
     public BWChess(short color, Location loc, int step) {
         super(loc);
         this.setColor(color);
         this.setLoc(loc);
+    }
+
+    public BWChess(Chess c) {
+        super(c.getLoc());
+        if (c instanceof BWChess) {
+            this.color = ((BWChess) c).getColor();
+        }
     }
 
     public void setColor(short color) {
@@ -42,10 +54,12 @@ class BWChess extends Chess{
         return this.color;
     }
 
+    @Deprecated
     public void setStep(int step) {
         this.step = step;
     }
 
+    @Deprecated
     public Integer getStep() {
         return this.step;
     }
