@@ -112,6 +112,9 @@ public class MainViewController implements Initializable {
     }
 
     void checkAndUpdateUI(myImageView targetImage) {
+        if (Const.DEBUG) {
+            System.out.println("Click at " + targetImage.getLoc());
+        }
         if (chessBoard.clickDot(targetImage.getLoc())) {
             ArrayList<Location> arrayList = chessBoard.checkEat();
             short result = chessBoard.checkFinish();

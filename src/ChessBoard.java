@@ -38,7 +38,7 @@ public class ChessBoard {
 
     public boolean clickDot(Location loc) {
 
-        if (this.ChessStatus[loc.getX()][loc.getY()] != null) {
+        if (this.ChessStatus[loc.getX()][loc.getY()] == null) {
             // Make Chess
             this.ChessStatus[loc.getX()][loc.getY()] = ((BWChessFactory) factory).makeChess(this.nowPlayer, loc);
 
