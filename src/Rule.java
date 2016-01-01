@@ -9,6 +9,7 @@ abstract class Rule {
         else
             return Const.WHITE_WIN;
     }
+
     public abstract ArrayList<Location> eat(BWChess[][] ChessStatus);
 }
 
@@ -19,8 +20,8 @@ interface Eatable {
 class GoRule extends Rule implements Eatable {
     private short[][] Mapping;
     private int[] Block = new int[361];
-    private int BlockLen;
-    private ArrayList<Location> UpdateLoc = null;
+    private int BlockLen = 0;
+    private ArrayList<Location> UpdateLoc  = new ArrayList<>();
 
     @Override
     public short check(BWChess[][] ChessStatus) {
@@ -73,7 +74,6 @@ class GoRule extends Rule implements Eatable {
                     //System.out.println("eat" + i + " " + j);
                     UpdateChessStatus();
                     Eating(ChessStatus);
-                    ArrayIniter(ChessStatus);
                     System.out.println("next");
                 }
             }
@@ -87,6 +87,7 @@ class GoRule extends Rule implements Eatable {
             int j = Block[t] % 100;
             System.out.println("Kill: " + (j + 1) + " " + (i + 1));
             ChessStatus[i][j] = null;
+            SetMap(i,j,Const.NO_CHESS);
         }
     }
 
@@ -104,10 +105,10 @@ class GoRule extends Rule implements Eatable {
         }
     }
 
-    public short Checker(int LocX, int LocY) {
+    public void Checker(int LocX, int LocY) {
         //System.out.println(LocX + " " + LocY);
         int Rol_Len = Mapping.length, Col_Len = Mapping[0].length;
-        if (LocY - 1 > 0 && Mapping[LocX][LocY - 1] == Mapping[LocX][LocY] && isInBlock((LocX) * 100 + LocY - 1)) {
+        if (LocY - 1 >= 0 && Mapping[LocX][LocY - 1] == Mapping[LocX][LocY] && isInBlock((LocX) * 100 + LocY - 1)) {
             Block[BlockLen] = (LocX) * 100 + LocY - 1;
             BlockLen++;
             Checker(LocX, LocY - 1);
@@ -122,12 +123,11 @@ class GoRule extends Rule implements Eatable {
             BlockLen++;
             Checker(LocX, LocY + 1);
         }
-        if (LocX - 1 > 0 && Mapping[LocX - 1][LocY] == Mapping[LocX][LocY] && isInBlock((LocX) * 100 + LocY + 1)) {
+        if (LocX - 1 >= 0 && Mapping[LocX - 1][LocY] == Mapping[LocX][LocY] && isInBlock((LocX - 1) * 100 + LocY)) {
             Block[BlockLen] = (LocX - 1) * 100 + LocY;
             BlockLen++;
-            Checker(LocX, LocY - 1);
+            Checker(LocX - 1, LocY);
         }
-        return 0;
     }
 
     public boolean checkNoChess() {
@@ -156,15 +156,14 @@ class GoRule extends Rule implements Eatable {
     }
 
     public void UpdateChessStatus() {
-        UpdateLoc = new ArrayList<>();
         int Updatelenth = BlockLen;
         for (int i = 0; i < Updatelenth; i++) {
-            UpdateLoc.add(new Location(Block[i]/100,Block[i]%100));
+            UpdateLoc.add(new Location(Block[i] / 100, Block[i] % 100));
         }
     }
 
     public void SetMap(int LocX, int LocY, short Status) {
-        Mapping[LocY][LocX] = Status;
+        Mapping[LocX][LocY] = Status;
     }
 
 }
