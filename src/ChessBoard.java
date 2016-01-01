@@ -1,3 +1,5 @@
+import java.util.ArrayList;
+
 public class ChessBoard {
     Factory factory = new BWChessFactory();
 
@@ -53,6 +55,10 @@ public class ChessBoard {
 
     public short checkFinish() {
         return this.rule.check((BWChess[][]) ChessStatus);
+    }
+
+    public ArrayList<Location> checkEat() {
+        return this.rule.eat((BWChess[][]) ChessStatus);
     }
 
     public short checkToLose() {

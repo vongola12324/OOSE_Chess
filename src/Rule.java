@@ -1,23 +1,26 @@
+import java.util.ArrayList;
 
 abstract class Rule {
     public abstract short check(BWChess[][] ChessStatus);
 
     public short toLose(short nowPlayer) {
-        if(nowPlayer == Const.BLACK_CHESS)
+        if (nowPlayer == Const.BLACK_CHESS)
             return Const.BLACK_WIN;
         else
             return Const.WHITE_WIN;
     }
+    public abstract ArrayList<Location> eat(BWChess[][] ChessStatus);
 }
 
 interface Eatable {
-    public void eat(BWChess[][] ChessStatus);
+    public ArrayList eat(BWChess[][] ChessStatus);
 }
 
 class GoRule extends Rule implements Eatable {
     private short[][] Mapping;
     private int[] Block = new int[361];
     private int BlockLen;
+    private ArrayList<Location> UpdateLoc = null;
 
     @Override
     public short check(BWChess[][] ChessStatus) {
@@ -43,16 +46,16 @@ class GoRule extends Rule implements Eatable {
             return Const.BLACK_WIN;
         }
 
-        eat(ChessStatus);
+        //eat(ChessStatus);
         return Const.NO_WIN;
     }
 
 
-
     @Override
-    public void eat(BWChess[][] ChessStatus) {
+    public ArrayList<Location> eat(BWChess[][] ChessStatus) {
         int Row_Len = ChessStatus.length, Col_Len = ChessStatus[0].length;
         ArrayIniter(ChessStatus);
+        UpdateChessStatus();
         for (int i = 0; i < Row_Len; i++) {
             for (int j = 0; j < Col_Len; j++) {
                 if (Mapping[i][j] == Const.NO_CHESS) {
@@ -68,23 +71,23 @@ class GoRule extends Rule implements Eatable {
                         continue;
                     }
                     //System.out.println("eat" + i + " " + j);
+                    UpdateChessStatus();
                     Eating(ChessStatus);
                     ArrayIniter(ChessStatus);
                     System.out.println("next");
                 }
             }
         }
+        return UpdateLoc;
     }
 
-    // FIXME: Need to return Change List (ArrayList)
     public void Eating(BWChess[][] ChessStatus) {
         for (int t = 0; t < BlockLen; t++) {
             int i = Block[t] / 100;
             int j = Block[t] % 100;
-            System.out.println("Kill: "+(j+1) + " " + (i+1));
+            System.out.println("Kill: " + (j + 1) + " " + (i + 1));
             ChessStatus[i][j] = null;
         }
-
     }
 
     public void ArrayIniter(BWChess[][] ChessStatus) {
@@ -152,6 +155,14 @@ class GoRule extends Rule implements Eatable {
         return true;
     }
 
+    public void UpdateChessStatus() {
+        UpdateLoc = new ArrayList<>();
+        int Updatelenth = BlockLen;
+        for (int i = 0; i < Updatelenth; i++) {
+            UpdateLoc.add(new Location(Block[i]/100,Block[i]%100));
+        }
+    }
+
     public void SetMap(int LocX, int LocY, short Status) {
         Mapping[LocY][LocX] = Status;
     }
@@ -200,6 +211,11 @@ class GomokuRule extends Rule {
             return Const.BLACK_WIN;
         }
 
+    }
+
+    @Override
+    public ArrayList<Location> eat(BWChess[][] ChessStatus) {
+        return null;
     }
 
     public short DownLastCheck(final BWChess[][] ChessStatus, BWChess CheckChess) {

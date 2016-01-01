@@ -87,10 +87,10 @@ public class MainViewController implements Initializable {
     }
 
     void changeGameMode() {
-        if(ruleGroup.getSelectedToggle() == Rule_Five) {
+        if (ruleGroup.getSelectedToggle() == Rule_Five) {
             restartAndInitial();
             chessBoard.setRule(new GomokuRule());
-        } else if(ruleGroup.getSelectedToggle() == Rule_Weichi) {
+        } else if (ruleGroup.getSelectedToggle() == Rule_Weichi) {
             restartAndInitial();
             chessBoard.setRule(new GoRule());
         }
@@ -113,7 +113,7 @@ public class MainViewController implements Initializable {
 
     void checkAndUpdateUI(myImageView targetImage) {
         if (chessBoard.clickDot(targetImage.getLoc())) {
-            ArrayList<Location>=chessBoard.getRule().eat();
+            ArrayList<Location> arrayList = chessBoard.checkEat();
             short result = chessBoard.checkFinish();
             // FIXME: Need to return ChangeList and update UI
             updateUI(targetImage);
