@@ -1,5 +1,3 @@
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
@@ -115,6 +113,7 @@ public class MainViewController implements Initializable {
         if (Const.DEBUG) {
             System.out.println("Click at " + targetImage.getLoc());
         }
+
         if (chessBoard.clickDot(targetImage.getLoc())) {
             ArrayList<Location> arrayList = chessBoard.checkEat();
             short result = chessBoard.checkFinish();
