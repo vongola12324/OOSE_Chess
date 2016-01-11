@@ -123,9 +123,9 @@ public class MainViewController implements Initializable {
             updateUI(targetImage);
             if (arrayList != null && arrayList.size() > 0){
                 for(Location l:arrayList){
-//                  System.out.println("Wanted: " + l );
+                System.out.println("Wanted: " + l );
                     // FIXME: When open, it will let some chess disappear (but chess is still there)
-//                  updateImageToColor(Const.NO_CHESS, board[l.getX()-1][l.getY()-1]);
+                  updateImageToColor(Const.NO_CHESS, board[l.getX()][l.getY()]);
                 }
             }
             if (result == Const.NO_WIN) {

@@ -21,7 +21,7 @@ class GoRule extends Rule implements Eatable {
     private short[][] Mapping;
     private int[] Block = new int[361];
     private int BlockLen = 0;
-    private ArrayList<Location> UpdateLoc  = new ArrayList<>();
+    private ArrayList<Location> UpdateLoc = new ArrayList<>();
 
     @Override
     public short check(BWChess[][] ChessStatus) {
@@ -40,23 +40,22 @@ class GoRule extends Rule implements Eatable {
                 }
             }
         }
-
         if (WhiteColorCounter >= 177 && BlackColorCounter < 183) {
             return Const.WHITE_WIN;
         } else if (BlackColorCounter >= 183 && WhiteColorCounter < 177) {
             return Const.BLACK_WIN;
         }
-
-        //eat(ChessStatus);
         return Const.NO_WIN;
     }
 
 
     @Override
     public ArrayList<Location> eat(BWChess[][] ChessStatus) {
+
         int Row_Len = ChessStatus.length, Col_Len = ChessStatus[0].length;
         ArrayIniter(ChessStatus);
-        UpdateChessStatus();
+        UpdateLoc = new ArrayList<Location>();
+
         for (int i = 0; i < Row_Len; i++) {
             for (int j = 0; j < Col_Len; j++) {
                 if (Mapping[i][j] == Const.NO_CHESS) {
@@ -66,13 +65,12 @@ class GoRule extends Rule implements Eatable {
                     BlockLen = 1;
                     Block[0] = 100 * i + j;
                     Checker(i, j);
-                    //System.out.println(i + " " + j);
+
                     if (checkNoChess()) {
-                        //System.out.println(checkNoChess());
+
                         continue;
                     }
-                    //System.out.println("eat" + i + " " + j);
-                    UpdateChessStatus();
+
                     Eating(ChessStatus);
                     System.out.println("next");
                 }
@@ -82,12 +80,13 @@ class GoRule extends Rule implements Eatable {
     }
 
     public void Eating(BWChess[][] ChessStatus) {
+        UpdateChessStatus();
         for (int t = 0; t < BlockLen; t++) {
             int i = Block[t] / 100;
             int j = Block[t] % 100;
-            System.out.println("Kill: " + (j + 1) + " " + (i + 1));
+
             ChessStatus[i][j] = null;
-            SetMap(i,j,Const.NO_CHESS);
+            SetMap(i, j, Const.NO_CHESS);
         }
     }
 
@@ -106,7 +105,7 @@ class GoRule extends Rule implements Eatable {
     }
 
     public void Checker(int LocX, int LocY) {
-        //System.out.println(LocX + " " + LocY);
+
         int Rol_Len = Mapping.length, Col_Len = Mapping[0].length;
         if (LocY - 1 >= 0 && Mapping[LocX][LocY - 1] == Mapping[LocX][LocY] && isInBlock((LocX) * 100 + LocY - 1)) {
             Block[BlockLen] = (LocX) * 100 + LocY - 1;
@@ -135,14 +134,13 @@ class GoRule extends Rule implements Eatable {
         for (int t = 0; t < BlockLen; t++) {
             i = Block[t] / 100;
             j = Block[t] % 100;
-            //System.out.println("Check" + i + " " + j);
-            //System.out.println("return this 1");
+
             if (i - 1 >= 0 && Mapping[i - 1][j] == Const.NO_CHESS) return true;
-            //System.out.println("return this 2");
+
             if (i + 1 < 19 && Mapping[i + 1][j] == Const.NO_CHESS) return true;
-            //System.out.println("return this 3");
+
             if (j - 1 >= 0 && Mapping[i][j - 1] == Const.NO_CHESS) return true;
-            //System.out.println("return this 4");
+
             if (j + 1 < 19 && Mapping[i][j + 1] == Const.NO_CHESS) return true;
         }
         return false;
