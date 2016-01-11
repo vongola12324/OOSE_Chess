@@ -23,9 +23,6 @@ public class ChessBoard {
         // Black Chess First
         this.nowPlayer = Const.BLACK_CHESS;
 
-        // Generate record
-        // FIXME: getname from UI
-        this.gameRecord = new Record("BLACK", "WHITE");
     }
 
     private void initializeChessBoard() {
@@ -34,6 +31,10 @@ public class ChessBoard {
                 this.ChessStatus[i][j] = null;
             }
         }
+    }
+
+    public void initRecord(String playerA, String playerB){
+        this.gameRecord = new Record(playerA, playerB);
     }
 
     public boolean clickDot(Location loc) {

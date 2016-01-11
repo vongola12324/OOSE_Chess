@@ -8,6 +8,10 @@ public class Record {
     public Record(String blackChessPlayer, String whiteChessPlayer) {
         this.blackChess = blackChessPlayer;
         this.whiteChess = whiteChessPlayer;
+        if (Const.DEBUG) {
+            System.out.println("PlayerA(Black): " + this.blackChess);
+            System.out.println("PlayerB(White): " + this.whiteChess);
+        }
         this.chessHistory = new ArrayList<>();
     }
 

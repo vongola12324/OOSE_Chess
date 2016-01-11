@@ -17,6 +17,11 @@ public class MainViewController implements Initializable {
     private final Image nochess = new Image("image/board.jpg");
     private final ToggleGroup ruleGroup = new ToggleGroup();
 
+    private boolean gameStatus = false;
+    private String playerA;
+    private String PlayerB;
+    private Rule gameRule = new GomokuRule();
+
     private ChessBoard chessBoard;
     private final Alert alert = new Alert(Alert.AlertType.INFORMATION);
 
@@ -30,6 +35,10 @@ public class MainViewController implements Initializable {
     RadioButton Rule_Five;
     @FXML
     RadioButton Rule_Weichi;
+    @FXML
+    TextField Player1_name;
+    @FXML
+    TextField Player2_name;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -52,10 +61,13 @@ public class MainViewController implements Initializable {
     void restartAndInitial() {
         initializeBoardImage();
         setAllActionOfBoardToBlackOrWhite();
+        this.gameStatus = false;
+        this.Player1_name.setEditable(true);
+        this.Player2_name.setEditable(true);
     }
 
     void initializeBoardImage() {
-        chessBoard = new ChessBoard(new GomokuRule());
+        chessBoard = new ChessBoard(this.gameRule);
         for (int i = 0; i < 20; i++) {
             for (int i2 = 0; i2 < 20; i2++) {
                 board[i][i2] = new myImageView("image/board.jpg");
@@ -88,11 +100,11 @@ public class MainViewController implements Initializable {
 
     void changeGameMode() {
         if (ruleGroup.getSelectedToggle() == Rule_Five) {
+            this.gameRule = new GomokuRule();
             restartAndInitial();
-            chessBoard.setRule(new GomokuRule());
         } else if (ruleGroup.getSelectedToggle() == Rule_Weichi) {
+            this.gameRule = new GoRule();
             restartAndInitial();
-            chessBoard.setRule(new GoRule());
         }
 
     }
@@ -114,6 +126,12 @@ public class MainViewController implements Initializable {
     void checkAndUpdateUI(myImageView targetImage) {
         if (Const.DEBUG) {
             System.out.println("Click at " + targetImage.getLoc());
+        }
+        if (!this.gameStatus){
+            this.gameStatus = true;
+            chessBoard.initRecord((Player1_name.getText().equals("") ? "NoName" : Player1_name.getText()), (Player2_name.getText().equals("") ? "NoName" : Player2_name.getText()));
+            Player1_name.setEditable(false);
+            Player2_name.setEditable(false);
         }
 
         if (chessBoard.clickDot(targetImage.getLoc())) {
@@ -170,9 +188,6 @@ public class MainViewController implements Initializable {
         }
     }
 
-    void setRule(short rule) {
-
-    }
 }
 
 class myImageView extends ImageView {
