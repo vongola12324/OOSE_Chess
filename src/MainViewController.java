@@ -123,13 +123,14 @@ public class MainViewController implements Initializable {
             updateUI(targetImage);
             if (arrayList != null && arrayList.size() > 0){
                 for(Location l:arrayList){
-//                    System.out.println("Wanted: " + l );
-                    updateImageToColor(Const.NO_CHESS, board[l.getY()-1][l.getX()-1]);
+//                  System.out.println("Wanted: " + l );
+                    // FIXME: When open, it will let some chess disappear (but chess is still there)
+//                  updateImageToColor(Const.NO_CHESS, board[l.getX()-1][l.getY()-1]);
                 }
             }
             if (result == Const.NO_WIN) {
                 chessBoard.changePlayer();
-                targetImage.setOnMouseClicked(null);
+//                targetImage.setOnMouseClicked(null);
             } else if (result != Const.NO_WIN) {
                 alertAndRestart(result);
             }
