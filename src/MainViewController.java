@@ -8,11 +8,13 @@ import javafx.scene.layout.GridPane;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
+import java.util.StringJoiner;
 
 public class MainViewController implements Initializable {
     private myImageView[][] board = new myImageView[20][20];
     private final Image black = new Image("image/black.jpg");
     private final Image white = new Image("image/white.jpg");
+    private final Image nochess = new Image("image/board.jpg");
     private final ToggleGroup ruleGroup = new ToggleGroup();
 
     private ChessBoard chessBoard;
@@ -119,6 +121,12 @@ public class MainViewController implements Initializable {
             short result = chessBoard.checkFinish();
             // FIXME: Need to return ChangeList and update UI
             updateUI(targetImage);
+            if (arrayList != null && arrayList.size() > 0){
+                for(Location l:arrayList){
+//                    System.out.println("Wanted: " + l );
+                    updateImageToColor(Const.NO_CHESS, board[l.getY()-1][l.getX()-1]);
+                }
+            }
             if (result == Const.NO_WIN) {
                 chessBoard.changePlayer();
                 targetImage.setOnMouseClicked(null);
@@ -133,7 +141,9 @@ public class MainViewController implements Initializable {
     }
 
     void updateImageToColor(short color, myImageView targetImage) {
-        if (color == Const.BLACK_CHESS)
+        if (color == Const.NO_CHESS)
+            targetImage.setImage(nochess);
+         else if (color == Const.BLACK_CHESS)
             targetImage.setImage(black);
         else
             targetImage.setImage(white);
