@@ -95,6 +95,8 @@ public class MainViewController implements Initializable {
 
     void surrenderGame() {
         showAlert(chessBoard.checkToLose());
+        Record gameRecord = chessBoard.getGameRecord();
+        gameRecord.saveRecord(chessBoard.checkToLose());
         restartAndInitial();
     }
 
@@ -137,12 +139,10 @@ public class MainViewController implements Initializable {
         if (chessBoard.clickDot(targetImage.getLoc())) {
             ArrayList<Location> arrayList = chessBoard.checkEat();
             short result = chessBoard.checkFinish();
-            // FIXME: Need to return ChangeList and update UI
             updateUI(targetImage);
             if (arrayList != null && arrayList.size() > 0){
                 for(Location l:arrayList){
                 System.out.println("Wanted: " + l );
-                    // FIXME: When open, it will let some chess disappear (but chess is still there)
                   updateImageToColor(Const.NO_CHESS, board[l.getX()][l.getY()]);
                 }
             }
@@ -170,7 +170,7 @@ public class MainViewController implements Initializable {
 
     void alertAndRestart(short result) {
         showAlert(result);
-        restartAndInitial();
+        //restartAndInitial();
     }
 
     void showAlert(short result) {

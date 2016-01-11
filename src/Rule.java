@@ -11,6 +11,8 @@ abstract class Rule {
     }
 
     public abstract ArrayList<Location> eat(BWChess[][] ChessStatus);
+
+    public abstract short getRuleCode();
 }
 
 interface Eatable {
@@ -77,6 +79,11 @@ class GoRule extends Rule implements Eatable {
             }
         }
         return UpdateLoc;
+    }
+
+    @Override
+    public short getRuleCode() {
+        return Const.GO_CHESS;
     }
 
     public void Eating(BWChess[][] ChessStatus) {
@@ -213,6 +220,11 @@ class GomokuRule extends Rule {
     @Override
     public ArrayList<Location> eat(BWChess[][] ChessStatus) {
         return null;
+    }
+
+    @Override
+    public short getRuleCode() {
+        return Const.GOMOKU_CHESS;
     }
 
     public short DownLastCheck(final BWChess[][] ChessStatus, BWChess CheckChess) {

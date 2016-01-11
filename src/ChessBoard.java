@@ -34,7 +34,7 @@ public class ChessBoard {
     }
 
     public void initRecord(String playerA, String playerB){
-        this.gameRecord = new Record(playerA, playerB);
+        this.gameRecord = new Record(playerA, playerB, rule.getRuleCode());
     }
 
     public boolean clickDot(Location loc) {
@@ -55,7 +55,10 @@ public class ChessBoard {
     }
 
     public short checkFinish() {
-        return this.rule.check((BWChess[][]) ChessStatus);
+        short result = this.rule.check((BWChess[][]) ChessStatus);
+        if (result != Const.NO_WIN)
+            gameRecord.saveRecord(result);
+        return result;
     }
 
     public ArrayList<Location> checkEat() {
@@ -91,5 +94,9 @@ public class ChessBoard {
 
     public Rule getRule() {
         return this.rule;
+    }
+
+    public Record getGameRecord(){
+        return this.gameRecord;
     }
 }
