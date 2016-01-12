@@ -1,6 +1,6 @@
 public class Const{
     // For Develope
-    static boolean DEBUG = true;
+    static boolean DEBUG = false;
 
     //Image Parameter
     static short IMAGE_HEIGHT = 37;

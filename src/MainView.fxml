@@ -88,34 +88,39 @@
             </TextField>
          </children>
       </Pane>
-      <Pane layoutX="753.0" layoutY="245.0" prefHeight="240.0" prefWidth="377.0">
+      <Pane layoutX="753.0" layoutY="200.0" prefHeight="300.0" prefWidth="377.0">
         <children>
-            <Label layoutX="126.0" layoutY="14.0" text="遊戲選項">
+            <Label layoutX="126.0" layoutY="2.0" text="遊戲選項">
                <font>
                   <Font size="26.0" />
                </font>
             </Label>
-            <RadioButton fx:id="Rule_Five" layoutX="101.0" layoutY="192.0" mnemonicParsing="false" prefHeight="34.0" prefWidth="120.0" selected="true" text="五子棋">
+            <RadioButton fx:id="Rule_Five" layoutX="101.0" layoutY="210.0" mnemonicParsing="false" prefHeight="34.0" prefWidth="120.0" selected="true" text="五子棋">
                <font>
                   <Font size="15.0" />
                </font>
             </RadioButton>
-            <RadioButton fx:id="Rule_Weichi" layoutX="211.0" layoutY="192.0" mnemonicParsing="false" prefHeight="34.0" prefWidth="76.0" text="圍棋">
+            <RadioButton fx:id="Rule_Weichi" layoutX="211.0" layoutY="210.0" mnemonicParsing="false" prefHeight="34.0" prefWidth="76.0" text="圍棋">
                <font>
                   <Font size="15.0" />
                </font>
             </RadioButton>
-            <Label layoutX="163.0" layoutY="168.0" text="模式">
+            <Label layoutX="163.0" layoutY="180.0" text="模式">
                <font>
                   <Font size="18.0" />
                </font>
             </Label>
-            <Button fx:id="New_Game" layoutX="115.0" layoutY="66.0" mnemonicParsing="false" prefHeight="34.0" prefWidth="120.0" text="New Game">
+            <Button fx:id="New_Game" layoutX="115.0" layoutY="50.0" mnemonicParsing="false" prefHeight="34.0" prefWidth="120.0" text="New Game">
                <font>
                   <Font size="15.0" />
                </font>
             </Button>
-             <Button fx:id="Surrender" layoutX="115.0" layoutY="120.0" mnemonicParsing="false" prefHeight="34.0" prefWidth="120.0" text="Surrender">
+            <Button fx:id="LoadRecord" layoutX="115.0" layoutY="90.0" mnemonicParsing="false" prefHeight="34.0" prefWidth="120.0" text="Load Record">
+                <font>
+                    <Font size="15.0" />
+                </font>
+            </Button>
+             <Button fx:id="Surrender" layoutX="115.0" layoutY="130.0" mnemonicParsing="false" prefHeight="34.0" prefWidth="120.0" text="Surrender">
                  <font>
                      <Font size="15.0" />
                  </font>

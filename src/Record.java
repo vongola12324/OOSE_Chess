@@ -12,11 +12,9 @@ public class Record {
     private String whiteChess;
     private short winner;
     private short gameMode;
-    private ArrayList<Chess> chessHistory;
+    private ArrayList<BWChess> chessHistory;
 
-    public Record(String blackChessPlayer, String whiteChessPlayer, short gameMode) {
-        this.blackChess = blackChessPlayer;
-        this.whiteChess = whiteChessPlayer;
+    public Record(short gameMode) {
         if (Const.DEBUG) {
             System.out.println("PlayerA(Black): " + this.blackChess);
             System.out.println("PlayerB(White): " + this.whiteChess);
@@ -34,7 +32,7 @@ public class Record {
     }
 
     public void addRecord(Chess chess) {
-        this.chessHistory.add(chess);
+        this.chessHistory.add((BWChess)chess);
     }
 
     public void push(Chess chess) {
@@ -57,12 +55,32 @@ public class Record {
         this.removeRecord();
     }
 
+    public ArrayList<BWChess> getChessHistory() {
+        return this.chessHistory;
+    }
+
+    public short getGameMode(){
+        return this.gameMode;
+    }
+
+    public void setPlayer(String blackChessPlayer, String whiteChessPlayer){
+        this.blackChess = blackChessPlayer;
+        this.whiteChess = whiteChessPlayer;
+    }
+
+    public String getBlackChess(){
+        return this.blackChess;
+    }
+
+    public String getWhiteChess(){
+        return this.whiteChess;
+    }
+
     public void saveRecord(short winner) {
         // TODO: Save to file or DB
         this.winner = winner;
         Gson gson = new GsonBuilder().setPrettyPrinting().create();;
         String json = gson.toJson(this);
-        //String json = "{\n\"BlackChess\":" + gson.toJson(blackChess) + ",\n\"WhiteChess\":" + gson.toJson(whiteChess) + ",\n\"Winner\":" + gson.toJson(winner) + ",\n\"ChessHistory:\n" + gson.toJson(chessHistory) + "\n}";
         try {
             FileWriter file = new FileWriter(new SimpleDateFormat("yyyy-MM-dd-HH-mm-ss").format(new Date()) + ".json");
             file.write(json);
@@ -78,7 +96,8 @@ public class Record {
         Gson gson = new Gson();
         try {
             BufferedReader br = new BufferedReader(new FileReader(filename));
-            this.restoreRecord(gson.fromJson(br, Record.class));
+            Object obj = gson.fromJson(br, Record.class);
+            restoreRecord((Record)obj);
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }

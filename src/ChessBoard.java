@@ -13,16 +13,18 @@ public class ChessBoard {
     private Record gameRecord;
 
     public ChessBoard(Rule rule) {
+        // Set rule
+        this.rule = rule;
+        // Init game
         initializeGame();
         // Clean Chess Board
         initializeChessBoard();
-        this.rule = rule;
     }
 
     private void initializeGame() {
         // Black Chess First
         this.nowPlayer = Const.BLACK_CHESS;
-
+        this.initRecord();
     }
 
     private void initializeChessBoard() {
@@ -33,8 +35,8 @@ public class ChessBoard {
         }
     }
 
-    public void initRecord(String playerA, String playerB){
-        this.gameRecord = new Record(playerA, playerB, rule.getRuleCode());
+    public void initRecord(){
+        this.gameRecord = new Record(rule.getRuleCode());
     }
 
     public boolean clickDot(Location loc) {
@@ -81,22 +83,29 @@ public class ChessBoard {
         return nowPlayer;
     }
 
-    public void setRule(Rule rule) {
-        if (Const.DEBUG) {
-            if (rule instanceof GomokuRule)
-                System.out.println("Now playing Gomoku");
-            else
-                System.out.println("Now playing Go");
-        }
-
-        this.rule = rule;
-    }
-
     public Rule getRule() {
         return this.rule;
     }
 
     public Record getGameRecord(){
         return this.gameRecord;
+    }
+
+    public void reseumFromRecord(Record record){
+        // Clean Board
+        this.ChessStatus = new BWChess[20][20];
+        this.gameRecord = null;
+
+        // Load Record
+        this.gameRecord = record;
+        ArrayList<BWChess> chessHistory = this.gameRecord.getChessHistory();
+        for (BWChess chess:chessHistory){
+            Location chessLoc = chess.getLoc();
+            this.ChessStatus[chessLoc.getY()][chessLoc.getX()] = chess;
+        }
+    }
+
+    public void setRecordPlayer(String playerA, String playerB){
+        this.gameRecord.setPlayer(playerA, playerB);
     }
 }

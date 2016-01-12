@@ -1,6 +1,10 @@
 public abstract class Chess{
     private Location loc;
 
+    public Chess(){
+
+    };
+
     public Chess(Location loc) {
         this.setLoc(loc);
     }

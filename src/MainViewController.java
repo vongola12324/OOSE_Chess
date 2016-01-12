@@ -1,3 +1,4 @@
+import javafx.concurrent.Task;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
@@ -5,6 +6,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
 
+import javax.swing.*;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
@@ -18,8 +20,6 @@ public class MainViewController implements Initializable {
     private final ToggleGroup ruleGroup = new ToggleGroup();
 
     private boolean gameStatus = false;
-    private String playerA;
-    private String PlayerB;
     private Rule gameRule = new GomokuRule();
 
     private ChessBoard chessBoard;
@@ -31,6 +31,8 @@ public class MainViewController implements Initializable {
     Button New_Game;
     @FXML
     Button Surrender;
+    @FXML
+    Button LoadRecord;
     @FXML
     RadioButton Rule_Five;
     @FXML
@@ -84,6 +86,7 @@ public class MainViewController implements Initializable {
 
         New_Game.setOnMouseClicked(event -> newGame());
         Surrender.setOnMouseClicked(event -> surrenderGame());
+        LoadRecord.setOnMouseClicked(event -> loadRecord());
         ruleGroup.selectedToggleProperty().addListener((observable, oldValue, newValue) -> {
             changeGameMode();
         });
@@ -131,9 +134,13 @@ public class MainViewController implements Initializable {
         }
         if (!this.gameStatus){
             this.gameStatus = true;
-            chessBoard.initRecord((Player1_name.getText().equals("") ? "NoName" : Player1_name.getText()), (Player2_name.getText().equals("") ? "NoName" : Player2_name.getText()));
+            if (Player1_name.getText().equals(""))
+                Player1_name.setText("NoName");
+            if (Player2_name.getText().equals(""))
+                Player2_name.setText("NoName");
             Player1_name.setEditable(false);
             Player2_name.setEditable(false);
+            chessBoard.setRecordPlayer(Player1_name.getText(), Player2_name.getText());
         }
 
         if (chessBoard.clickDot(targetImage.getLoc())) {
@@ -142,7 +149,6 @@ public class MainViewController implements Initializable {
             updateUI(targetImage);
             if (arrayList != null && arrayList.size() > 0){
                 for(Location l:arrayList){
-                System.out.println("Wanted: " + l );
                   updateImageToColor(Const.NO_CHESS, board[l.getX()][l.getY()]);
                 }
             }
@@ -186,6 +192,54 @@ public class MainViewController implements Initializable {
         } else {
             alert.setHeaderText("TIE!");
         }
+    }
+
+    void loadRecord(){
+        JFileChooser fc = new JFileChooser();
+        String filename = null;
+        // Demonstrate "Open" dialog:
+        int rVal = fc.showOpenDialog(new JFrame());
+        if (rVal == JFileChooser.APPROVE_OPTION) {
+            filename = fc.getSelectedFile().getAbsolutePath();
+            if (Const.DEBUG) {
+                System.out.println("Load File: " + filename);
+            }
+        } else {
+            return;
+        }
+        // Load Record
+        Record record = chessBoard.getGameRecord();
+        record.loadRecord(filename);
+
+        // Restart Game with rule in record
+        if(record.getGameMode() == Const.GO_CHESS) {
+            this.gameRule = new GoRule();
+        } else {
+            this.gameRule = new GomokuRule();
+        }
+        restartAndInitial();
+
+        // load Chess
+        chessBoard.reseumFromRecord(record);
+        for(myImageView[] dotLine:board){
+            for(myImageView dot:dotLine){
+                dot.setOnMouseClicked(null);
+            }
+        }
+        ArrayList<BWChess> chessHistory = record.getChessHistory();
+        for(Chess i:chessHistory){
+            Location chessLoc = i.getLoc();
+            updateImageToColor(((BWChess)i).getColor(), board[chessLoc.getX()][chessLoc.getY()]);
+        }
+
+        // load player name
+        Player1_name.setText(record.getBlackChess());
+        Player1_name.setEditable(false);
+        Player2_name.setText(record.getWhiteChess());
+        Player2_name.setEditable(false);
+
+
+
     }
 
 }
